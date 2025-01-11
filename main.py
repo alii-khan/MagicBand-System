@@ -675,10 +675,16 @@ def main_screen():
 
         tk.Button(password_window, text="Login", command=validate_password).pack(pady=10)
 
+    def open_guest_interface():
+        root.destroy()  # Close the main screen
+        from guest_interface import GuestInterface
+        guest_app = GuestInterface()
+        guest_app.run()
+
     # Buttons for the main screen
     tk.Label(root, text="Welcome to the Disney System", font=("Helvetica", 18)).pack(pady=20)
     tk.Button(root, text="Employee Login", command=open_employee_interface, height=2, width=20).pack(pady=10)
-    tk.Button(root, text="Guest Login", height=2, width=20).pack(pady=10)  # Placeholder (, command=lambda: pass)
+    tk.Button(root, text="Guest Login", command=open_guest_interface, height=2, width=20).pack(pady=10)
 
     root.mainloop()
 
