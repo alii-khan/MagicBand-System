@@ -644,3 +644,5 @@ magic_band_3.use_band_in_shop(shop_ak3, 5.99, "Candy Apple")  # Annie at Zuri's 
 magic_band_1.use_band_in_element(element_ak1)  # Christopher interacts with Timon and Pumba Statue
 magic_band_2.use_band_in_element(element_ak2)  # Ruby interacts with Tree of Life
 magic_band_3.use_band_in_element(element_ak3)  # Annie interacts with Pandora Floating Rocks
+
+print("this is a test")
