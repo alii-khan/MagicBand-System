@@ -116,7 +116,7 @@ class MagicBand():
        
         self.light_up = False
 
-    def use_band_for_Park_entry(self, Park: object):
+    def use_band_for_park_entry(self, Park: object):
         if Park.park_name in self.linked_tickets:
             print(f"Welcome to {Park.park_name}")
             self.light_up = True

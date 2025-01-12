@@ -260,9 +260,9 @@ magic_band_system.purchase_park_tickets(magic_band_2, epcot_park)
 magic_band_system.purchase_park_tickets(magic_band_3, epcot_park)
 
 # Guests enter the Animal Kingdom Park
-magic_band_1.use_band_for_Park_entry(animal_kingdom_park)
-magic_band_2.use_band_for_Park_entry(animal_kingdom_park)
-magic_band_3.use_band_for_Park_entry(animal_kingdom_park)
+magic_band_1.use_band_for_park_entry(animal_kingdom_park)
+magic_band_2.use_band_for_park_entry(animal_kingdom_park)
+magic_band_3.use_band_for_park_entry(animal_kingdom_park)
 
 # Guests get in line for and complete rides
 magic_band_1.use_band_for_ride(ride_ak1)  # Christopher on Bug's Life
@@ -298,7 +298,7 @@ magic_band_3.use_band_in_element(element_ak3)  # Annie interacts with Pandora Fl
 # ------------------------------------------------------------------------------------------------
 
 import tkinter as tk
-from tkinter import ttk # This is just the themed window set
+# from tkinter import ttk # This is just the themed window set
 
 # Main Application Window
 def main_screen():
@@ -331,7 +331,7 @@ def main_screen():
                 tk.Label(password_window, text="Incorrect Password", fg="red").pack()
                 # (I know it's unnecessary to expect invalid entries, but this helps me when testing code)
                 # You can also use Tkinter messagebox for an Error window to come up. That is also very simple
-                # However, I am trying to implement code that we have taken up in class to show understanding.
+                # However, I wanted to implement code that we have taken up in class to show understanding.
 
         tk.Button(password_window, text="Login", command=validate_password).pack(pady=10) # Login Button
 
@@ -347,8 +347,8 @@ def employee_interface():
     
     # Create Employee UI Window
     emp_root = tk.Tk()
-    emp_root.title("Disney Employee Interface")
-    emp_root.geometry("1000x700")
+    emp_root.title("Disney Employee Interface") # Window Name
+    emp_root.geometry("1000x700") # Window Size
 
     def show_park_overview():
         park_window = tk.Toplevel(emp_root)
@@ -365,6 +365,7 @@ def employee_interface():
             detail_window.geometry("800x600")
             
             # Gather the Required Information to Show on Window
+            # In each line, there a for loop, iterating through all rides, restaurants, shops, and elements (RESPECTIVELY)
             details = f"Rides: \n" + "\n".join([ride.ride_name for ride in park.rides]) + "\n\n" \
                       f"Restaurants: \n" + "\n".join([rest.name for rest in park.restaurants]) + "\n\n" \
                       f"Shops: \n" + "\n".join([shop.name for shop in park.shops]) + "\n\n" \
@@ -418,6 +419,8 @@ def employee_interface():
             # Create a simple for loop for each ride at a park instead of doing it individually
             for ride in park.rides:
                 tk.Button(ride_detail_window, text=ride.ride_name, command=lambda r=ride: tk.Label(ride_detail_window, text=r.get_ride_info(), justify="left", font=("Helvetica", 10)).pack(pady=5)).pack(pady=5)
+                # Here, the command isn't a function or method. It is itself a Label being packed onto the window!
+                # Rephrase: This button is packed on the screen. When clicked, it packs a label!
 
         # Create a simple for loop for each park instead of doing it individually.
         # (This loop contains the for loop above because the command in button below calls the for loop)
@@ -442,29 +445,30 @@ def employee_interface():
             for restaurant in park.restaurants:
                 def add_dish_window(restaurant):
                     add_dish_win = tk.Toplevel(rest_detail_window)
-                    add_dish_win.title("Add Dish")
-                    add_dish_win.geometry("400x200")
+                    # Again, Toplevel will open an overlapping window, but now, on a DOUBLE overlapping window
+                    add_dish_win.title("Add Dish") # Triple Overlapping Window Name
+                    add_dish_win.geometry("400x200") # Triple Overlapping Window Size
 
                     tk.Label(add_dish_win, text="Enter Dish Name").pack(pady=5)
-                    dish_name_entry = tk.Entry(add_dish_win)
+                    dish_name_entry = tk.Entry(add_dish_win) # Asks user for Name of Dish
                     dish_name_entry.pack(pady=5)
 
                     tk.Label(add_dish_win, text="Enter Price").pack(pady=5)
-                    price_entry = tk.Entry(add_dish_win)
+                    price_entry = tk.Entry(add_dish_win) # Asks user for Price of Dish
                     price_entry.pack(pady=5)
 
                     def add_dish():
                         dish_name = dish_name_entry.get()
                         price = float(price_entry.get())
-                        restaurant.add_dish(dish_name, price)
+                        restaurant.add_dish(dish_name, price) # Dish is created based on input of user
                         tk.Label(add_dish_win, text="Dish Added Successfully", fg="green").pack(pady=5)
 
-                    tk.Button(add_dish_win, text="Add Dish", command=add_dish).pack(pady=10)
+                    tk.Button(add_dish_win, text="Add Dish", command=add_dish).pack(pady=10) # Button to add dish
 
                 def show_restaurant_info():
-                    info_window = tk.Toplevel(rest_detail_window)
-                    info_window.title(f"{restaurant.name} Info")
-                    info_window.geometry("800x600")
+                    info_window = tk.Toplevel(rest_detail_window) # Overlapping Window
+                    info_window.title(f"{restaurant.name} Info") # Overlapping Window Name
+                    info_window.geometry("800x600") # Overlapping Window Size
                     tk.Label(info_window, text=restaurant.get_restaurant_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
                     tk.Button(info_window, text="Add Dish", command=lambda: add_dish_window(restaurant)).pack(pady=10)
 
@@ -490,30 +494,31 @@ def employee_interface():
             # Create a simple for loop for each shop at a park instead of doing it individually.
             for shop in park.shops:
                 def add_item_window(shop):
-                    add_item_win = tk.Toplevel(shop_detail_window)
-                    add_item_win.title("Add Item")
-                    add_item_win.geometry("400x200")
+                    add_item_win = tk.Toplevel(shop_detail_window) 
+                    # Again, Toplevel will open an overlapping window, but now, on a DOUBLE overlapping window
+                    add_item_win.title("Add Item") # Triple Overlapping Window Name
+                    add_item_win.geometry("400x200") # Triple Overlapping Window Size
 
                     tk.Label(add_item_win, text="Enter Item Name").pack(pady=5)
-                    item_name_entry = tk.Entry(add_item_win)
+                    item_name_entry = tk.Entry(add_item_win) # Asks user for Name of Item
                     item_name_entry.pack(pady=5)
 
                     tk.Label(add_item_win, text="Enter Price").pack(pady=5)
-                    price_entry = tk.Entry(add_item_win)
+                    price_entry = tk.Entry(add_item_win) # Asks user for Price of Item
                     price_entry.pack(pady=5)
 
                     def add_item():
                         item_name = item_name_entry.get()
                         price = float(price_entry.get())
-                        shop.add_item(item_name, price)
+                        shop.add_item(item_name, price) # Creates Item based on User Input
                         tk.Label(add_item_win, text="Item Added Successfully", fg="green").pack(pady=5)
 
-                    tk.Button(add_item_win, text="Add Item", command=add_item).pack(pady=10)
+                    tk.Button(add_item_win, text="Add Item", command=add_item).pack(pady=10) # Button to add Item
 
                 def show_shop_info():
-                    info_window = tk.Toplevel(shop_detail_window)
-                    info_window.title(f"{shop.name} Info")
-                    info_window.geometry("800x600")
+                    info_window = tk.Toplevel(shop_detail_window) # Overlapping Window
+                    info_window.title(f"{shop.name} Info") # Overlapping Window Name
+                    info_window.geometry("800x600") # Overlapping Window Size
                     tk.Label(info_window, text=shop.get_shop_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
                     tk.Button(info_window, text="Add Item", command=lambda: add_item_window(shop)).pack(pady=10)
 
@@ -540,6 +545,7 @@ def employee_interface():
             element_detail_window.geometry("800x600") # Double Overlapping Window Size
 
             # Gather the Required Information to Display on Screen
+            # Simple for loop iterating through element names in a park (from parameter)
             details = "\n".join([elem.name for elem in park.elements])
             
             # Display Details in a Single Label

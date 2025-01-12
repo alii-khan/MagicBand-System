@@ -1,4 +1,4 @@
-class Ride:
+class Ride: # EDITED BY ALI KHAN > ADDED TOTAL VISTORS IN ***RIDE INFO***
     def __init__(self, ride_name:str, height_requirement:int, capacity:int):
         self.ride_name = ride_name # The name of the ride.
         self.height_requirement = height_requirement # The height requirement for the ride.
@@ -24,7 +24,8 @@ Ride name: {self.ride_name}
 Height Requirement: {self.height_requirement}
 Capacity: {self.capacity}
 Queue Length: {len(self.queue)}
-"""
+Total Visitors: {self.total_visitors} 
+""" # EDITED BY ALI KHAN > ADDED TOTAL VISTORS IN ***RIDE INFO***
 
 class Restaurant:
     def __init__(self, name: str):
