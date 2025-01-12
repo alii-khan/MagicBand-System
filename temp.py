@@ -4,7 +4,7 @@
 # DisneyWorld MagicBandSystem Culminating 
 # -----------------------------------------------
 
-from classes import *
+from model_classes import *
 
 # USE CASE:
 # ------------------------------------
@@ -324,7 +324,7 @@ def main_screen():
         password_entry.pack()
 
         def validate_password():
-            if password_entry.get() == "DisneyEmployee123": # Checks to see if Employee's password is correct.
+            if password_entry.get() == "123": # Checks to see if Employee's password is correct.
                 password_window.destroy() # This is just going to collapse the widgets!
                 employee_interface() # If password is correct, redirects you to the Employee UI!
             else:
