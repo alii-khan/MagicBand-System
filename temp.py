@@ -653,73 +653,87 @@ from tkinter import ttk # This is just the themed window set
 
 # Main Application Window
 def main_screen():
+    
+    # Create Window
     root = tk.Tk()
-    root.title("Disney System Interface")
-    root.geometry("800x600")
+    root.title("Disney System Interface") # Window Title
+    root.geometry("800x600") # Size of Window
 
     def open_employee_interface():
+        
         password_window = tk.Toplevel(root)
-        password_window.title("Employee Login")
-        password_window.geometry("300x200")
+        
+        # Toplevel is something we haven't covered, but makes sense. This is crucial because
+        # it is used to create a window on top of other windows
+        # Learnt and Obtained Understanding from: https://www.geeksforgeeks.org/python-tkinter-toplevel-widget/
+        
+        password_window.title("Employee Login") # Title for Overlapped Window
+        password_window.geometry("300x200") # Size of Window
 
-        tk.Label(password_window, text="Enter Password").pack(pady=10)
-        password_entry = tk.Entry(password_window, show="*")
+        tk.Label(password_window, text="Enter Password").pack(pady=10) # Asks user to enter password
+        password_entry = tk.Entry(password_window, show="*") # When typing, entry is censored by asterisks!
         password_entry.pack()
 
         def validate_password():
-            if password_entry.get() == "DisneyEmployee123":
+            if password_entry.get() == "DisneyEmployee123": # Checks to see if Employee's password is correct.
                 password_window.destroy() # This is just going to collapse the widgets!
-                employee_interface()
+                employee_interface() # If password is correct, redirects you to the Employee UI!
             else:
                 tk.Label(password_window, text="Incorrect Password", fg="red").pack()
+                # (I know it's unnecessary to expect invalid entries, but this helps me when testing code)
+                # You can also use Tkinter messagebox for an Error window to come up. That is also very simple
+                # However, I am trying to implement code that we have taken up in class to show understanding.
 
-        tk.Button(password_window, text="Login", command=validate_password).pack(pady=10)
+        tk.Button(password_window, text="Login", command=validate_password).pack(pady=10) # Login Button
 
-    def open_guest_interface():
-        root.destroy()  # Close the main screen
-        from guest_interface import GuestInterface
-        guest_app = GuestInterface()
-        guest_app.run()
-
-    # Buttons for the main screen
+    # Buttons for the Main Window
     tk.Label(root, text="Welcome to the Disney System", font=("Helvetica", 18)).pack(pady=20)
     tk.Button(root, text="Employee Login", command=open_employee_interface, height=2, width=20).pack(pady=10)
-    tk.Button(root, text="Guest Login", command=open_guest_interface, height=2, width=20).pack(pady=10)
+    tk.Button(root, text="Guest Login", height=2, width=20).pack(pady=10)  # Placeholder (, command=lambda: pass)
 
     root.mainloop()
 
 # Employee Interface
 def employee_interface():
+    
+    # Create Employee UI Window
     emp_root = tk.Tk()
     emp_root.title("Disney Employee Interface")
     emp_root.geometry("1000x700")
 
     def show_park_overview():
         park_window = tk.Toplevel(emp_root)
-        park_window.title("Park Overview")
-        park_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        park_window.title("Park Overview") # Name of Overlapping Window
+        park_window.geometry("800x600") # Window Size
 
-        tk.Label(park_window, text="Select a Park to View Details", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(park_window, text="Select a Park to View Details", font=("Helvetica", 14)).pack(pady=10) # Label on Overlapping Window
 
         def show_park_details(park):
             detail_window = tk.Toplevel(park_window)
-            detail_window.title(f"{park.park_name} Details")
+            # Again, Toplevel will open an overlapping window, but now, on an overlapping window!
+            detail_window.title(f"{park.park_name} Details") # Name of Double Overlapping Window
             detail_window.geometry("800x600")
-
+            
+            # Gather the Required Information to Show on Window
             details = f"Rides: \n" + "\n".join([ride.ride_name for ride in park.rides]) + "\n\n" \
                       f"Restaurants: \n" + "\n".join([rest.name for rest in park.restaurants]) + "\n\n" \
                       f"Shops: \n" + "\n".join([shop.name for shop in park.shops]) + "\n\n" \
-                      f"Elements: \n" + "\n".join([elem.name for elem in park.elements])
+                      f"Elements: \n" + "\n".join([element.name for element in park.elements])
 
+            # In a single label, show all details!
             tk.Label(detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20, padx=20)
 
+        # Rather than individually creating all overlapping windows for the parks, make a simple for loop!
         for park in disney_parks:
             tk.Button(park_window, text=park.park_name, command=lambda p=park: show_park_details(p)).pack(pady=10)
+        # In the command=lambda, you're stating p=park and sending it in as a parameter for the command
 
     def show_magic_band_management():
         band_window = tk.Toplevel(emp_root)
-        band_window.title("Magic Band Management")
-        band_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        band_window.title("Magic Band Management") # Overlapping Window Name
+        band_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(band_window, text="Magic Band Management", font=("Helvetica", 14)).pack(pady=10)
 
@@ -732,80 +746,102 @@ def employee_interface():
 
         def register_band():
             tk.Label(band_window, text="Register a Magic Band (Simulated)", font=("Helvetica", 12)).pack(pady=10)
-
+            
+        # Create Buttons for Magic Band Management Window
         tk.Button(band_window, text="View Usage Report", command=view_usage_report).pack(pady=5)
         tk.Button(band_window, text="Provide New Band", command=provide_new_band).pack(pady=5)
         tk.Button(band_window, text="Register Band", command=register_band).pack(pady=5)
 
     def show_ride_management():
         ride_window = tk.Toplevel(emp_root)
-        ride_window.title("Ride Management")
-        ride_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        ride_window.title("Ride Management") # Overlapping Window Name
+        ride_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(ride_window, text="Select a Park to View Ride Info", font=("Helvetica", 14)).pack(pady=10)
 
         def show_ride_details(park):
             ride_detail_window = tk.Toplevel(ride_window)
-            ride_detail_window.title(f"{park.park_name} Rides")
-            ride_detail_window.geometry("800x600")
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            ride_detail_window.title(f"{park.park_name} Rides") # Double Overlapping Window Name
+            ride_detail_window.geometry("800x600") # Double Overlapping Window Size
 
+            # Create a simple for loop for each ride at a park instead of doing it individually
             for ride in park.rides:
                 tk.Button(ride_detail_window, text=ride.ride_name, command=lambda r=ride: tk.Label(ride_detail_window, text=r.get_ride_info(), justify="left", font=("Helvetica", 10)).pack(pady=5)).pack(pady=5)
 
+        # Create a simple for loop for each park instead of doing it individually.
+        # (This loop contains the for loop above because the command in button below calls the for loop)
         for park in disney_parks:
             tk.Button(ride_window, text=park.park_name, command=lambda p=park: show_ride_details(p)).pack(pady=5)
 
     def show_restaurant_management():
         restaurant_window = tk.Toplevel(emp_root)
-        restaurant_window.title("Restaurant Management")
-        restaurant_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        restaurant_window.title("Restaurant Management") # Overlapping Window Name
+        restaurant_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(restaurant_window, text="Select a Park to View Restaurants", font=("Helvetica", 14)).pack(pady=10)
 
         def show_restaurant_details(park):
             rest_detail_window = tk.Toplevel(restaurant_window)
-            rest_detail_window.title(f"{park.park_name} Restaurants")
-            rest_detail_window.geometry("800x600")
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            rest_detail_window.title(f"{park.park_name} Restaurants") # Double Overlapping Window Name
+            rest_detail_window.geometry("800x600") # Double Overlapping Window Size
 
+            # Create a simple for loop for each restaurant at a park instead of doing it individually.
             for restaurant in park.restaurants:
                 tk.Button(rest_detail_window, text=restaurant.name, command=lambda r=restaurant: tk.Label(rest_detail_window, text=r.get_restaurant_info(), justify="center", font=("Helvetica", 10)).pack(pady=10)).pack(pady=5)
-
+            
+        # Create a simple loop for each park instead of doing it individually
+        # (This loop contains the for loop above because the command in button below calls the for loop)
         for park in disney_parks:
             tk.Button(restaurant_window, text=park.park_name, command=lambda p=park: show_restaurant_details(p)).pack(pady=10)
 
     def show_shop_management():
         shop_window = tk.Toplevel(emp_root)
-        shop_window.title("Shop Management")
-        shop_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        shop_window.title("Shop Management") # Overlapping Window Name
+        shop_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(shop_window, text="Select a Park to View Shops", font=("Helvetica", 14)).pack(pady=10)
 
         def show_shop_details(park):
             shop_detail_window = tk.Toplevel(shop_window)
-            shop_detail_window.title(f"{park.park_name} Shops")
-            shop_detail_window.geometry("800x600")
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            shop_detail_window.title(f"{park.park_name} Shops") # Double Overlapping Window Name
+            shop_detail_window.geometry("800x600") # Double Overlapping Window Size
 
+            # Create a simple for loop for each shop at a park instead of doing it individually.
             for shop in park.shops:
                 tk.Button(shop_detail_window, text=shop.name, command=lambda s=shop: tk.Label(shop_detail_window, text=s.get_shop_info(), justify="center", font=("Helvetica", 10)).pack(pady=10)).pack(pady=5)
 
+        # Create a simple loop for each park instead of doing it individually
+        # (This loop contains the for loop above because the command in button below calls the for loop)
         for park in disney_parks:
             tk.Button(shop_window, text=park.park_name, command=lambda p=park: show_shop_details(p)).pack(pady=10)
 
     def show_element_management():
         element_window = tk.Toplevel(emp_root)
-        element_window.title("Park Elements")
-        element_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        element_window.title("Park Elements") # Overlapping Window Name
+        element_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(element_window, text="Select a Park to View Elements", font=("Helvetica", 14)).pack(pady=10)
 
         def show_element_details(park):
             element_detail_window = tk.Toplevel(element_window)
-            element_detail_window.title(f"{park.park_name} Elements")
-            element_detail_window.geometry("800x600")
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            element_detail_window.title(f"{park.park_name} Elements") # Double Overlapping Window Name
+            element_detail_window.geometry("800x600") # Double Overlapping Window Size
 
+            # Gather the Required Information to Display on Screen
             details = "\n".join([elem.name for elem in park.elements])
+            
+            # Display Details in a Single Label
             tk.Label(element_detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20)
 
+        # Create a simple for loop for each park instead of making each button individually
         for park in disney_parks:
             tk.Button(element_window, text=park.park_name, command=lambda p=park: show_element_details(p)).pack(pady=10)
 
