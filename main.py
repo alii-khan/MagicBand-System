@@ -4,358 +4,7 @@
 # DisneyWorld MagicBandSystem Culminating 
 # -----------------------------------------------
 
-class Ride:
-    def __init__(self, ride_name:str, height_requirement:int, capacity:int):
-        self.ride_name = ride_name # The name of the ride.
-        self.height_requirement = height_requirement # The height requirement for the ride.
-        self.capacity = capacity # The number of guests the ride can accommodate at a time.
-        self.queue = [] # A list of Magic Bands waiting to enter the ride.
-        self.total_visitors = 0 # Counts how many visitors visited this ride.
-
-    def __str__(self):
-        return self.ride_name
-
-    def add_to_queue(self, band): # Adds a guest’s Magic Band to the ride queue.
-        self.queue.append(band)
-       
-        self.total_visitors += 1 # Increases the counter by 1
-
-    def complete_ride(self, band): # Removes a guest's Magic Band to the ride queue.
-        self.queue.remove(band)
-   
-    def get_ride_info(self): # Returns details about the ride.
-        return f"""
-*** RIDE INFO ***
-Ride name: {self.ride_name}
-Height Requirement: {self.height_requirement}
-Capacity: {self.capacity}
-Queue Length: {len(self.queue)}
-"""
-
-class Restaurant:
-    def __init__(self, name: str):
-        self.name = name
-        self.dishes = []
-
-        # Used for get_restaurant_info function (same for the shop class)
-        self.list1 = []
-        self.list2 = []
-
-    def __str__(self):
-        return self.name
-
-    def add_dish(self, name_of_dish: str, price_of_dish: float):
-        self.dishes.append((name_of_dish, price_of_dish)) # Adds as a tuple.
-
-    def get_restaurant_info(self):
-
-        # Adds the length of names and prices to a list separately
-        for x in self.dishes:
-            self.list1.append(len(x[0]))
-            self.list2.append(len(str(x[1])))
-
-        # Finds the greatest length in each list (num1 is item and num2 is price)
-        self.num1 = max(self.list1)
-        self.num2 = max(self.list2)
-
-        # Centers the restaurant name according to the greatest length for item and price (same for the shop class)
-        # The other numbers account for "Dish name: ", "Price: $", etc.
-        restaurant_info = "\n" + f"*** {self.name} ***".center(self.num1 + self.num2 + 8 + 11 + 5) + "\n\n" + "*** MENU ***".center(self.num1 + self.num2 + 8 + 11 + 5) + "\n"
-
-        for x in self.dishes:
-            restaurant_info += "\nDish name: " + str(x[0]).ljust(self.num1 + 5) + "Price: $" + str(x[1])
-
-        return restaurant_info
-
-class Shop:
-    def __init__(self, name: str):
-        self.name = name
-        self.items = []
-
-        self.list1 = []
-        self.list2 = []
-
-    def __str__(self):
-        return self.name
-
-    def add_item(self, name_of_item: str, price_of_item: float):
-        self.items.append((name_of_item, price_of_item)) # Adds as a tuple.
-
-    def get_shop_info(self):
-        for x in self.items:
-            self.list1.append(len(x[0]))
-            self.list2.append(len(str(x[1])))
-
-        self.num1 = max(self.list1)
-
-        self.num2 = max(self.list2)
-
-        shop_info = "\n" + f"*** {self.name} ***".center(self.num1 + self.num2 + 8 + 11 + 5) + "\n\n" + "*** ITEMS ***".center(self.num1 + self.num2 + 8 + 11 + 5) + "\n"
-
-        for x in self.items:
-            shop_info += "\nItem name: " + str(x[0]).ljust(self.num1 + 5) + "Price: $" + str(x[1])
-
-        return shop_info
-
-class Element:
-
-    current_element_id = 1000
-
-    def __init__(self, name_of_element:str, type:str):
-
-        Element.current_element_id += 1
-        self.element_id = "Park Element " + str(Element.current_element_id) #A unique identifier for the element.
-        self.name = name_of_element # The name of the element.
-        self.interaction_type = type # The type of interaction supported (e.g., scan, touch, proximity).
-        self.interaction_log = "Magic Band Interaction Log:\n"# A log of interactions with Magic Bands.
-
-    def __str__(self):
-        return self.element_id
-
-    def interact(self, band_id):
-        # Logs an interaction with a Magic Band.
-        # From https://www.geeksforgeeks.org/get-current-date-and-time-using-python/
-        import datetime
-        self.interaction_log += str(datetime.datetime.now()) + "   Band: " + str(band_id) +"\n"
-
-    def get_interaction_summary(self):
-        # Provides a summary of all interactions.
-        return self.interaction_log
-
-class Park:
-
-    def __init__(self, name_of_park:str):
-       
-       self.park_name = name_of_park
-       self.rides = []
-       self.elements = []
-       self.shops = []
-       self.restaurants = []
-
-    def __str__(self):
-        return self.park_name
-
-    def add_ride(self,ride):
-        #adds a ride to the park
-        self.rides.append(ride)
-
-    def add_elements(self,element):
-        #adds an element to the park
-        self.elements.append(element)
-
-    def add_shops(self, shops_in_park):
-        #adds a shop to the park
-        self.shops.append(shops_in_park)
-
-    def add_restaurant(self,restaurant):
-        #adds restaurant to the park
-        self.restaurants.append(restaurant)
-
-    def get_overview(self):
-        #gives the summary of the park
-
-        print(f"""
-The park has different types of rides which include: {*self.rides,}
-It has has different elements which include: {*self.elements,}
-              """)
-
-class Transaction:
-    
-    unique_id=1000
-
-    def __init__(self, amount:float, item_description:str, location:str, bought_in_restaurant:bool, bought_in_shop:bool ):
-       Transaction.unique_id+=1
-       self.transaction_id = Transaction.unique_id
-       self.amount = amount
-       self.item_description = item_description
-       self.location = location
-       self.bought_in_restaurant = bought_in_restaurant
-       self.bought_in_shop = bought_in_shop
-       
-    def record_transaction(self):
-       
-        transaction_record = [
-            self.transaction_id,
-            self.amount,
-            self.item_description,
-            self.location,
-        ]
-
-        MagicBand.purchase_history.append(transaction_record)
-       
-        if self.bought_in_restaurant== True:
-            MagicBand.use_band_in_restaurant(self.amount)
-
-        elif self.bought_in_shop==True:
-            MagicBand.use_band_in_shop(self.amount)
-        else:
-            return "Unknown transaction"
-       
-        return transaction_record
-
-    def get_transaction_details(self):
-        return [
-            "Your transaction id:",self.transaction_id,
-            "Price of the item purchased:",self.amount,
-            "Item description:",self.item_description,
-            "Location of purchase:",self.location,
-        ]
-
-class Guest():
-   
-    current_guest_id = 1000
-   
-    # --------------- Constructor ---------------
-   
-    def __init__(self, name:str, age:int):
-       
-        Guest.current_guest_id += 1
-        self.guest_id = "G00" + str(Guest.current_guest_id) # Unique Identifier for the Guest
-        self.name = name # Name of the Guest
-        self.age = age # Age of the Guest
-        self.magic_band = None # A reference to the guest's Magic Band
-        self.preferences = [] # A List of Preferences (i.e. Favourite, Restrictions...)
-       
-       # ---------------- METHODS ----------------
-   
-    # 1. String Representation Method
-   
-    def __str__(self):
-        return ("This is guest:" + self.guest_id + "-->" + self.name)
-
-    # -----------------------------------------
-   
-    # 2. Link's MagicBand to Guest
-
-    def link_magic_band(self, band):
-       
-        self.magic_band = band
-        return f"\nMagicBand {band.band_id} has been linked to guest ( {self.name} | {self.guest_id} )!"
-   
-    # -----------------------------------------
-   
-    # 3. Updates the Guest's Preferences
-   
-    def update_preferences(self, preferences):
-       
-        self.preferences.append(preferences)
-       
-        return f"\n({self.name} | {self.guest_id})'s preferences have been updated!\nPREFERENCES:\n{self.preferences}"
-
-    # -----------------------------------------
-
-    # 3. Returns the Guest's Profile and Linked Band Details
-   
-    def get_profile_summary(self):
-       
-        # If Test MagicBand Class / Objects ARE Created:
-        return (f"\nGuest ID: {self.guest_id}\nName: {self.name}\nAge: {self.age}\nBand ID: {self.magic_band.band_id}\nPreferences: {self.preferences}")
-
-class MagicBand():
-   
-    band_id = 0
-
-    def __init__(self, guest:Guest):
-        self.guest = guest
-        import random
-
-        #Create unique band id
-        MagicBand.band_id += 1
-        self.band_id = MagicBand.band_id
-
-        self.current_location = None
-        self.linked_tickets = []
-        self.useage_history = []
-        self.bought_item = 0 #start this at 0 instead of 1000
-
-        #Set color of band
-        colors = ["red", "green", "blue", "purple"]
-        MagicBand.band_color = random.choice(colors)
-        self.current_color = MagicBand.band_color
-       
-        self.light_up = False
-
-    def use_band_for_Park_entry(self, Park: object):
-        if Park.park_name in self.linked_tickets:
-            print(f"Welcome to {Park.park_name}")
-            self.light_up = True
-            print(f"Your band has lit up a bright {self.current_color}")
-            self.linked_tickets.remove(Park.park_name)
-            self.current_location = Park.park_name
-        else:
-            return "You do not have a ticket for this park"
-
-    def use_band_for_ride(self, ride: object):
-        self.useage_history.append("Ride : "+ ride.ride_name)
-        self.current_color = ride.ride_name
-        ride.add_to_queue(self)
-
-    def use_band_in_restaurant(self, restaurant:Restaurant, price_of_dish: float, name_of_dish:str):
-        self.most_recent_order = Transaction(price_of_dish, name_of_dish, restaurant.name, True, False)
-        self.useage_history.append("Food order:" + restaurant.name + "> "+ name_of_dish)
-        self.current_location = restaurant.name
-        self.bought_item += 1
-
-    def use_band_in_shop(self, shop: Shop, price_of_item:float, name_of_item:str):
-        self.most_recent_item = Transaction(price_of_item, name_of_item, shop.name, False, True)
-        self.useage_history.append("Bought item:" + shop.name + ">" + name_of_item)
-        self.current_location = shop.name
-        self.bought_item += 1
-
-    def light_up(self, color):
-        self.light_up = True
-        self.current_color = color
-    
-    def use_band_in_element(self, element:object):
-        self.useage_history.append("Interact with element : "+ element.name)
-        self.current_location = element.name
-        element.interact(self)
-
-    def purchase_park_ticket(self, Park: object):
-        self.useage_history.append("Purchase Park Ticket : " + Park.park_name)
-        self.current_location = "Ticket Store"
-        self.linked_tickets.append(Park.park_name)
-
-    def __str__(self):
-        return f"{self.band_id}: Band_id for magic band class"
-
-class MagicBandSystem:
-    def __init__(self, list_of_disney_parks: list):
-        self.registered_bands = []            # List of all bands that have been registered
-        self.parks = list_of_disney_parks     # List of all parks
-
-    def register_band(self,band):
-        # Registers a band
-        self.registered_bands.append(band)
-
-    def get_band_info(self,band_id: int):
-        # Returns information about a band if it is registered
-
-        band_found = False
-
-        # Checks through registered bands to find band and returns information when found
-        for band in self.registered_bands:
-            if band.band_id == band_id:
-                band_found = True
-                return "Name: " + band.guest.name + " \nCurrent Location: " + str(band.current_location)
-
-        # If band is not found then that is returned
-        if band_found == False:
-            return "Band not Found"
-       
-    def generate_usage_report(self):
-        # Returns overall usage report of all bands used and all existing parks
-        return "Total Bands Used: " + str(len(self.registered_bands)) + "\nTotal Parks Visited: " + str(len(self.parks))
-
-    def purchase_park_tickets(self, band : MagicBand, park: Park):
-        # Magic band purchases park ticket
-        band.purchase_park_ticket(park)
-
-    def get_ride_interaction_count(self, ride:Ride):
-        return ride.ride_name +" total visitors: " + str(ride.total_visitors)
-   
-    def __str__ (self):
-        return "This is the Disney Magic Band System"
+from model_classes import *
 
 # USE CASE:
 # ------------------------------------
@@ -653,73 +302,87 @@ from tkinter import ttk # This is just the themed window set
 
 # Main Application Window
 def main_screen():
+    
+    # Create Window
     root = tk.Tk()
-    root.title("Disney System Interface")
-    root.geometry("800x600")
+    root.title("Disney System Interface") # Window Title
+    root.geometry("800x600") # Size of Window
 
     def open_employee_interface():
+        
         password_window = tk.Toplevel(root)
-        password_window.title("Employee Login")
-        password_window.geometry("300x200")
+        
+        # Toplevel is something we haven't covered, but makes sense. This is crucial because
+        # it is used to create a window on top of other windows
+        # Learnt and Obtained Understanding from: https://www.geeksforgeeks.org/python-tkinter-toplevel-widget/
+        
+        password_window.title("Employee Login") # Title for Overlapped Window
+        password_window.geometry("300x200") # Size of Window
 
-        tk.Label(password_window, text="Enter Password").pack(pady=10)
-        password_entry = tk.Entry(password_window, show="*")
+        tk.Label(password_window, text="Enter Password").pack(pady=10) # Asks user to enter password
+        password_entry = tk.Entry(password_window, show="*") # When typing, entry is censored by asterisks!
         password_entry.pack()
 
         def validate_password():
-            if password_entry.get() == "DisneyEmployee123":
+            if password_entry.get() == "123": # Checks to see if Employee's password is correct.
                 password_window.destroy() # This is just going to collapse the widgets!
-                employee_interface()
+                employee_interface() # If password is correct, redirects you to the Employee UI!
             else:
                 tk.Label(password_window, text="Incorrect Password", fg="red").pack()
+                # (I know it's unnecessary to expect invalid entries, but this helps me when testing code)
+                # You can also use Tkinter messagebox for an Error window to come up. That is also very simple
+                # However, I am trying to implement code that we have taken up in class to show understanding.
 
-        tk.Button(password_window, text="Login", command=validate_password).pack(pady=10)
+        tk.Button(password_window, text="Login", command=validate_password).pack(pady=10) # Login Button
 
-    def open_guest_interface():
-        root.destroy()  # Close the main screen
-        from guest_interface import GuestInterface
-        guest_app = GuestInterface()
-        guest_app.run()
-
-    # Buttons for the main screen
+    # Buttons for the Main Window
     tk.Label(root, text="Welcome to the Disney System", font=("Helvetica", 18)).pack(pady=20)
     tk.Button(root, text="Employee Login", command=open_employee_interface, height=2, width=20).pack(pady=10)
-    tk.Button(root, text="Guest Login", command=open_guest_interface, height=2, width=20).pack(pady=10)
+    tk.Button(root, text="Guest Login", height=2, width=20).pack(pady=10)  # Placeholder (, command=lambda: pass)
 
     root.mainloop()
 
 # Employee Interface
 def employee_interface():
+    
+    # Create Employee UI Window
     emp_root = tk.Tk()
     emp_root.title("Disney Employee Interface")
     emp_root.geometry("1000x700")
 
     def show_park_overview():
         park_window = tk.Toplevel(emp_root)
-        park_window.title("Park Overview")
-        park_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        park_window.title("Park Overview") # Name of Overlapping Window
+        park_window.geometry("800x600") # Window Size
 
-        tk.Label(park_window, text="Select a Park to View Details", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(park_window, text="Select a Park to View Details", font=("Helvetica", 14)).pack(pady=10) # Label on Overlapping Window
 
         def show_park_details(park):
             detail_window = tk.Toplevel(park_window)
-            detail_window.title(f"{park.park_name} Details")
+            # Again, Toplevel will open an overlapping window, but now, on an overlapping window!
+            detail_window.title(f"{park.park_name} Details") # Name of Double Overlapping Window
             detail_window.geometry("800x600")
-
+            
+            # Gather the Required Information to Show on Window
             details = f"Rides: \n" + "\n".join([ride.ride_name for ride in park.rides]) + "\n\n" \
                       f"Restaurants: \n" + "\n".join([rest.name for rest in park.restaurants]) + "\n\n" \
                       f"Shops: \n" + "\n".join([shop.name for shop in park.shops]) + "\n\n" \
-                      f"Elements: \n" + "\n".join([elem.name for elem in park.elements])
+                      f"Elements: \n" + "\n".join([element.name for element in park.elements])
 
+            # In a single label, show all details!
             tk.Label(detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20, padx=20)
 
+        # Rather than individually creating all overlapping windows for the parks, make a simple for loop!
         for park in disney_parks:
             tk.Button(park_window, text=park.park_name, command=lambda p=park: show_park_details(p)).pack(pady=10)
+        # In the command=lambda, you're stating p=park and sending it in as a parameter for the command
 
     def show_magic_band_management():
         band_window = tk.Toplevel(emp_root)
-        band_window.title("Magic Band Management")
-        band_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        band_window.title("Magic Band Management") # Overlapping Window Name
+        band_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(band_window, text="Magic Band Management", font=("Helvetica", 14)).pack(pady=10)
 
@@ -732,80 +395,157 @@ def employee_interface():
 
         def register_band():
             tk.Label(band_window, text="Register a Magic Band (Simulated)", font=("Helvetica", 12)).pack(pady=10)
-
+            
+        # Create Buttons for Magic Band Management Window
         tk.Button(band_window, text="View Usage Report", command=view_usage_report).pack(pady=5)
         tk.Button(band_window, text="Provide New Band", command=provide_new_band).pack(pady=5)
         tk.Button(band_window, text="Register Band", command=register_band).pack(pady=5)
 
     def show_ride_management():
         ride_window = tk.Toplevel(emp_root)
-        ride_window.title("Ride Management")
-        ride_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        ride_window.title("Ride Management") # Overlapping Window Name
+        ride_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(ride_window, text="Select a Park to View Ride Info", font=("Helvetica", 14)).pack(pady=10)
 
         def show_ride_details(park):
             ride_detail_window = tk.Toplevel(ride_window)
-            ride_detail_window.title(f"{park.park_name} Rides")
-            ride_detail_window.geometry("800x600")
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            ride_detail_window.title(f"{park.park_name} Rides") # Double Overlapping Window Name
+            ride_detail_window.geometry("800x600") # Double Overlapping Window Size
 
+            # Create a simple for loop for each ride at a park instead of doing it individually
             for ride in park.rides:
                 tk.Button(ride_detail_window, text=ride.ride_name, command=lambda r=ride: tk.Label(ride_detail_window, text=r.get_ride_info(), justify="left", font=("Helvetica", 10)).pack(pady=5)).pack(pady=5)
 
+        # Create a simple for loop for each park instead of doing it individually.
+        # (This loop contains the for loop above because the command in button below calls the for loop)
         for park in disney_parks:
             tk.Button(ride_window, text=park.park_name, command=lambda p=park: show_ride_details(p)).pack(pady=5)
 
     def show_restaurant_management():
         restaurant_window = tk.Toplevel(emp_root)
-        restaurant_window.title("Restaurant Management")
-        restaurant_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        restaurant_window.title("Restaurant Management") # Overlapping Window Name
+        restaurant_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(restaurant_window, text="Select a Park to View Restaurants", font=("Helvetica", 14)).pack(pady=10)
 
         def show_restaurant_details(park):
             rest_detail_window = tk.Toplevel(restaurant_window)
-            rest_detail_window.title(f"{park.park_name} Restaurants")
-            rest_detail_window.geometry("800x600")
-
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            rest_detail_window.title(f"{park.park_name} Restaurants") # Double Overlapping Window Name
+            rest_detail_window.geometry("800x600") # Double Overlapping Window Size
+            
+            # Create a simple for loop for each restaurant at a park instead of doing it individually.
             for restaurant in park.restaurants:
-                tk.Button(rest_detail_window, text=restaurant.name, command=lambda r=restaurant: tk.Label(rest_detail_window, text=r.get_restaurant_info(), justify="center", font=("Helvetica", 10)).pack(pady=10)).pack(pady=5)
+                def add_dish_window(restaurant):
+                    add_dish_win = tk.Toplevel(rest_detail_window)
+                    add_dish_win.title("Add Dish")
+                    add_dish_win.geometry("400x200")
+
+                    tk.Label(add_dish_win, text="Enter Dish Name").pack(pady=5)
+                    dish_name_entry = tk.Entry(add_dish_win)
+                    dish_name_entry.pack(pady=5)
+
+                    tk.Label(add_dish_win, text="Enter Price").pack(pady=5)
+                    price_entry = tk.Entry(add_dish_win)
+                    price_entry.pack(pady=5)
+
+                    def add_dish():
+                        dish_name = dish_name_entry.get()
+                        price = float(price_entry.get())
+                        restaurant.add_dish(dish_name, price)
+                        tk.Label(add_dish_win, text="Dish Added Successfully", fg="green").pack(pady=5)
+
+                    tk.Button(add_dish_win, text="Add Dish", command=add_dish).pack(pady=10)
+
+                def show_restaurant_info():
+                    info_window = tk.Toplevel(rest_detail_window)
+                    info_window.title(f"{restaurant.name} Info")
+                    info_window.geometry("800x600")
+                    tk.Label(info_window, text=restaurant.get_restaurant_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
+                    tk.Button(info_window, text="Add Dish", command=lambda: add_dish_window(restaurant)).pack(pady=10)
+
+                tk.Button(rest_detail_window, text=restaurant.name, command=show_restaurant_info).pack(pady=5)
 
         for park in disney_parks:
             tk.Button(restaurant_window, text=park.park_name, command=lambda p=park: show_restaurant_details(p)).pack(pady=10)
 
     def show_shop_management():
         shop_window = tk.Toplevel(emp_root)
-        shop_window.title("Shop Management")
-        shop_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        shop_window.title("Shop Management") # Overlapping Window Name
+        shop_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(shop_window, text="Select a Park to View Shops", font=("Helvetica", 14)).pack(pady=10)
 
         def show_shop_details(park):
             shop_detail_window = tk.Toplevel(shop_window)
-            shop_detail_window.title(f"{park.park_name} Shops")
-            shop_detail_window.geometry("800x600")
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            shop_detail_window.title(f"{park.park_name} Shops") # Double Overlapping Window Name
+            shop_detail_window.geometry("800x600") # Double Overlapping Window Size
 
+            # Create a simple for loop for each shop at a park instead of doing it individually.
             for shop in park.shops:
-                tk.Button(shop_detail_window, text=shop.name, command=lambda s=shop: tk.Label(shop_detail_window, text=s.get_shop_info(), justify="center", font=("Helvetica", 10)).pack(pady=10)).pack(pady=5)
+                def add_item_window(shop):
+                    add_item_win = tk.Toplevel(shop_detail_window)
+                    add_item_win.title("Add Item")
+                    add_item_win.geometry("400x200")
 
+                    tk.Label(add_item_win, text="Enter Item Name").pack(pady=5)
+                    item_name_entry = tk.Entry(add_item_win)
+                    item_name_entry.pack(pady=5)
+
+                    tk.Label(add_item_win, text="Enter Price").pack(pady=5)
+                    price_entry = tk.Entry(add_item_win)
+                    price_entry.pack(pady=5)
+
+                    def add_item():
+                        item_name = item_name_entry.get()
+                        price = float(price_entry.get())
+                        shop.add_item(item_name, price)
+                        tk.Label(add_item_win, text="Item Added Successfully", fg="green").pack(pady=5)
+
+                    tk.Button(add_item_win, text="Add Item", command=add_item).pack(pady=10)
+
+                def show_shop_info():
+                    info_window = tk.Toplevel(shop_detail_window)
+                    info_window.title(f"{shop.name} Info")
+                    info_window.geometry("800x600")
+                    tk.Label(info_window, text=shop.get_shop_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
+                    tk.Button(info_window, text="Add Item", command=lambda: add_item_window(shop)).pack(pady=10)
+
+                tk.Button(shop_detail_window, text=shop.name, command=show_shop_info).pack(pady=5)
+
+        # Create a simple loop for each park instead of doing it individually
+        # (This loop contains the for loop above because the command in button below calls the for loop)
         for park in disney_parks:
             tk.Button(shop_window, text=park.park_name, command=lambda p=park: show_shop_details(p)).pack(pady=10)
 
+
     def show_element_management():
         element_window = tk.Toplevel(emp_root)
-        element_window.title("Park Elements")
-        element_window.geometry("800x600")
+        # Again, Toplevel will open an overlapping window!
+        element_window.title("Park Elements") # Overlapping Window Name
+        element_window.geometry("800x600") # Overlapping Window Size
 
         tk.Label(element_window, text="Select a Park to View Elements", font=("Helvetica", 14)).pack(pady=10)
 
         def show_element_details(park):
             element_detail_window = tk.Toplevel(element_window)
-            element_detail_window.title(f"{park.park_name} Elements")
-            element_detail_window.geometry("800x600")
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            element_detail_window.title(f"{park.park_name} Elements") # Double Overlapping Window Name
+            element_detail_window.geometry("800x600") # Double Overlapping Window Size
 
+            # Gather the Required Information to Display on Screen
             details = "\n".join([elem.name for elem in park.elements])
+            
+            # Display Details in a Single Label
             tk.Label(element_detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20)
 
+        # Create a simple for loop for each park instead of making each button individually
         for park in disney_parks:
             tk.Button(element_window, text=park.park_name, command=lambda p=park: show_element_details(p)).pack(pady=10)
 
