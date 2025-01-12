@@ -655,7 +655,7 @@ from tkinter import ttk # This is just the themed window set
 def main_screen():
     root = tk.Tk()
     root.title("Disney System Interface")
-    root.geometry("600x400")
+    root.geometry("800x600")
 
     def open_employee_interface():
         password_window = tk.Toplevel(root)
@@ -668,7 +668,7 @@ def main_screen():
 
         def validate_password():
             if password_entry.get() == "DisneyEmployee123":
-                password_window.destroy()
+                password_window.destroy() # This is just going to collapse the widgets!
                 employee_interface()
             else:
                 tk.Label(password_window, text="Incorrect Password", fg="red").pack()
@@ -678,7 +678,7 @@ def main_screen():
     # Buttons for the main screen
     tk.Label(root, text="Welcome to the Disney System", font=("Helvetica", 18)).pack(pady=20)
     tk.Button(root, text="Employee Login", command=open_employee_interface, height=2, width=20).pack(pady=10)
-    tk.Button(root, text="Guest Login", height=2, width=20).pack(pady=10)  # Placeholder (Before height put command=lambda: pass,)
+    tk.Button(root, text="Guest Login", height=2, width=20).pack(pady=10)  # Placeholder (, command=lambda: pass)
 
     root.mainloop()
 
@@ -686,59 +686,65 @@ def main_screen():
 def employee_interface():
     emp_root = tk.Tk()
     emp_root.title("Disney Employee Interface")
-    emp_root.geometry("800x600")
+    emp_root.geometry("1000x700")
 
     def show_park_overview():
         park_window = tk.Toplevel(emp_root)
         park_window.title("Park Overview")
-        park_window.geometry("600x400")
+        park_window.geometry("800x600")
 
         tk.Label(park_window, text="Select a Park to View Details", font=("Helvetica", 14)).pack(pady=10)
 
         def show_park_details(park):
             detail_window = tk.Toplevel(park_window)
             detail_window.title(f"{park.park_name} Details")
-            detail_window.geometry("600x400")
+            detail_window.geometry("800x600")
 
-            details = f"Rides: {[ride.ride_name for ride in park.rides]}\n" \
-                      f"Restaurants: {[rest.name for rest in park.restaurants]}\n" \
-                      f"Shops: {[shop.name for shop in park.shops]}\n" \
-                      f"Elements: {[elem.name for elem in park.elements]}"
+            details = f"Rides: \n" + "\n".join([ride.ride_name for ride in park.rides]) + "\n\n" \
+                      f"Restaurants: \n" + "\n".join([rest.name for rest in park.restaurants]) + "\n\n" \
+                      f"Shops: \n" + "\n".join([shop.name for shop in park.shops]) + "\n\n" \
+                      f"Elements: \n" + "\n".join([elem.name for elem in park.elements])
 
-            tk.Label(detail_window, text=details, justify="left", font=("Helvetica", 12)).pack(pady=10)
+            tk.Label(detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20, padx=20)
 
         for park in disney_parks:
-            tk.Button(park_window, text=park.park_name, command=lambda p=park: show_park_details(p)).pack(pady=5)
+            tk.Button(park_window, text=park.park_name, command=lambda p=park: show_park_details(p)).pack(pady=10)
 
     def show_magic_band_management():
         band_window = tk.Toplevel(emp_root)
         band_window.title("Magic Band Management")
-        band_window.geometry("600x400")
+        band_window.geometry("800x600")
 
         tk.Label(band_window, text="Magic Band Management", font=("Helvetica", 14)).pack(pady=10)
 
-        # Example: View usage report
         def view_usage_report():
             report = magic_band_system.generate_usage_report()
-            tk.Label(band_window, text=report, font=("Helvetica", 12)).pack()
+            tk.Label(band_window, text=report, font=("Helvetica", 12)).pack(pady=10)
+
+        def provide_new_band():
+            tk.Label(band_window, text="Provide a New Magic Band (Simulated)", font=("Helvetica", 12)).pack(pady=10)
+
+        def register_band():
+            tk.Label(band_window, text="Register a Magic Band (Simulated)", font=("Helvetica", 12)).pack(pady=10)
 
         tk.Button(band_window, text="View Usage Report", command=view_usage_report).pack(pady=5)
+        tk.Button(band_window, text="Provide New Band", command=provide_new_band).pack(pady=5)
+        tk.Button(band_window, text="Register Band", command=register_band).pack(pady=5)
 
     def show_ride_management():
         ride_window = tk.Toplevel(emp_root)
         ride_window.title("Ride Management")
-        ride_window.geometry("600x400")
+        ride_window.geometry("800x600")
 
         tk.Label(ride_window, text="Select a Park to View Ride Info", font=("Helvetica", 14)).pack(pady=10)
 
         def show_ride_details(park):
             ride_detail_window = tk.Toplevel(ride_window)
-            ride_detail_window.title(f"{park.park_name} Ride Details")
-            ride_detail_window.geometry("600x400")
+            ride_detail_window.title(f"{park.park_name} Rides")
+            ride_detail_window.geometry("800x600")
 
             for ride in park.rides:
-                info = ride.get_ride_info()
-                tk.Label(ride_detail_window, text=info, justify="left", font=("Helvetica", 10)).pack(pady=5)
+                tk.Button(ride_detail_window, text=ride.ride_name, command=lambda r=ride: tk.Label(ride_detail_window, text=r.get_ride_info(), justify="left", font=("Helvetica", 10)).pack(pady=5)).pack(pady=5)
 
         for park in disney_parks:
             tk.Button(ride_window, text=park.park_name, command=lambda p=park: show_ride_details(p)).pack(pady=5)
@@ -746,21 +752,56 @@ def employee_interface():
     def show_restaurant_management():
         restaurant_window = tk.Toplevel(emp_root)
         restaurant_window.title("Restaurant Management")
-        restaurant_window.geometry("600x400")
+        restaurant_window.geometry("800x600")
 
         tk.Label(restaurant_window, text="Select a Park to View Restaurants", font=("Helvetica", 14)).pack(pady=10)
 
         def show_restaurant_details(park):
             rest_detail_window = tk.Toplevel(restaurant_window)
-            rest_detail_window.title(f"{park.park_name} Restaurant Details")
-            rest_detail_window.geometry("600x400")
+            rest_detail_window.title(f"{park.park_name} Restaurants")
+            rest_detail_window.geometry("800x600")
 
             for restaurant in park.restaurants:
-                info = restaurant.get_restaurant_info()
-                tk.Label(rest_detail_window, text=info, justify="left", font=("Helvetica", 10)).pack(pady=5)
+                tk.Button(rest_detail_window, text=restaurant.name, command=lambda r=restaurant: tk.Label(rest_detail_window, text=r.get_restaurant_info(), justify="center", font=("Helvetica", 10)).pack(pady=10)).pack(pady=5)
 
         for park in disney_parks:
-            tk.Button(restaurant_window, text=park.park_name, command=lambda p=park: show_restaurant_details(p)).pack(pady=5)
+            tk.Button(restaurant_window, text=park.park_name, command=lambda p=park: show_restaurant_details(p)).pack(pady=10)
+
+    def show_shop_management():
+        shop_window = tk.Toplevel(emp_root)
+        shop_window.title("Shop Management")
+        shop_window.geometry("800x600")
+
+        tk.Label(shop_window, text="Select a Park to View Shops", font=("Helvetica", 14)).pack(pady=10)
+
+        def show_shop_details(park):
+            shop_detail_window = tk.Toplevel(shop_window)
+            shop_detail_window.title(f"{park.park_name} Shops")
+            shop_detail_window.geometry("800x600")
+
+            for shop in park.shops:
+                tk.Button(shop_detail_window, text=shop.name, command=lambda s=shop: tk.Label(shop_detail_window, text=s.get_shop_info(), justify="center", font=("Helvetica", 10)).pack(pady=10)).pack(pady=5)
+
+        for park in disney_parks:
+            tk.Button(shop_window, text=park.park_name, command=lambda p=park: show_shop_details(p)).pack(pady=10)
+
+    def show_element_management():
+        element_window = tk.Toplevel(emp_root)
+        element_window.title("Park Elements")
+        element_window.geometry("800x600")
+
+        tk.Label(element_window, text="Select a Park to View Elements", font=("Helvetica", 14)).pack(pady=10)
+
+        def show_element_details(park):
+            element_detail_window = tk.Toplevel(element_window)
+            element_detail_window.title(f"{park.park_name} Elements")
+            element_detail_window.geometry("800x600")
+
+            details = "\n".join([elem.name for elem in park.elements])
+            tk.Label(element_detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20)
+
+        for park in disney_parks:
+            tk.Button(element_window, text=park.park_name, command=lambda p=park: show_element_details(p)).pack(pady=10)
 
     # Employee Interface Layout
     tk.Label(emp_root, text="Disney Employee Interface", font=("Helvetica", 18)).pack(pady=20)
@@ -768,6 +809,8 @@ def employee_interface():
     tk.Button(emp_root, text="Magic Band Info", command=show_magic_band_management, width=20, height=2).pack(pady=10)
     tk.Button(emp_root, text="Ride Info", command=show_ride_management, width=20, height=2).pack(pady=10)
     tk.Button(emp_root, text="Restaurant Info", command=show_restaurant_management, width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="View Shops", command=show_shop_management, width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="View Elements", command=show_element_management, width=20, height=2).pack(pady=10)
 
     emp_root.mainloop()
 
