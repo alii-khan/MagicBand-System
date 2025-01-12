@@ -387,20 +387,107 @@ def employee_interface():
 
         tk.Label(band_window, text="Magic Band Management", font=("Helvetica", 14)).pack(pady=10)
 
-        def view_usage_report():
-            report = magic_band_system.generate_usage_report()
-            tk.Label(band_window, text=report, font=("Helvetica", 12)).pack(pady=10)
-
         def provide_new_band():
-            tk.Label(band_window, text="Provide a New Magic Band (Simulated)", font=("Helvetica", 12)).pack(pady=10)
+            new_band_window = tk.Toplevel(band_window)
+            # Again, Toplevel will open an overlapping window, but now, on another overlapping window!
+            new_band_window.title("Provide New Magic Band") # Double Overlapping Window Name
+            new_band_window.geometry("400x300") # Double Overlapping Window Size
 
-        def register_band():
-            tk.Label(band_window, text="Register a Magic Band (Simulated)", font=("Helvetica", 12)).pack(pady=10)
-            
-        # Create Buttons for Magic Band Management Window
-        tk.Button(band_window, text="View Usage Report", command=view_usage_report).pack(pady=5)
+            tk.Label(new_band_window, text="Enter Guest ID").pack(pady=5)
+            guest_id_entry = tk.Entry(new_band_window) # Asks user for Guest ID
+            guest_id_entry.pack(pady=5)
+
+            def create_band():
+                guest_id = guest_id_entry.get()
+                for guest in [guest_1_ca, guest_2_ra, guest_3_aa, guest_4_jt, guest_5_mb, guest_6_rg]:
+                    if guest.guest_id == guest_id: # Checks to See if Guest Exists!
+                        new_band = MagicBand(guest) # If so, creates object!
+                        tk.Label(new_band_window, text=f"Magic Band {new_band.band_id} created for {guest.name}", fg="green").pack(pady=5)
+
+                        # Sub-option to register the new band
+                        def register_band():
+                            magic_band_system.register_band(new_band)
+                            tk.Label(new_band_window, text=f"Band {new_band.band_id} registered successfully", fg="green").pack(pady=5)
+
+                        tk.Label(new_band_window, text="This band must be registered into the system!", fg="blue").pack(pady=10)
+                        tk.Button(new_band_window, text="Register This Band", command=register_band).pack(pady=10)
+                        return
+
+                tk.Label(new_band_window, text="Guest not found", fg="red").pack(pady=5)
+
+            tk.Button(new_band_window, text="Create Band", command=create_band).pack(pady=10)
+
+        def view_guest_details():
+            guest_window = tk.Toplevel(band_window)
+            guest_window.title("View Guest Details")
+            guest_window.geometry("400x300")
+
+            tk.Label(guest_window, text="Enter Guest ID").pack(pady=5)
+            guest_id_entry = tk.Entry(guest_window)
+            guest_id_entry.pack(pady=5)
+
+            def display_details():
+                guest_id = guest_id_entry.get()
+                for guest in [guest_1_ca, guest_2_ra, guest_3_aa, guest_4_jt, guest_5_mb, guest_6_rg]:
+                    if guest.guest_id == guest_id:
+                        details = f"Name: {guest.name}\nGuest ID: {guest.guest_id}\nMagic Band: {guest.magic_band.band_id if guest.magic_band else 'None'}"
+                        tk.Label(guest_window, text=details).pack(pady=10)
+                        return
+                tk.Label(guest_window, text="Guest not found", fg="red").pack(pady=5)
+
+            tk.Button(guest_window, text="View Details", command=display_details).pack(pady=10)
+
+        def find_location():
+            location_window = tk.Toplevel(band_window)
+            location_window.title("Find Band/Guest Location")
+            location_window.geometry("400x200")
+
+            tk.Label(location_window, text="Enter Magic Band ID").pack(pady=5)
+            band_id_entry = tk.Entry(location_window)
+            band_id_entry.pack(pady=5)
+
+            def display_location():
+                band_id = int(band_id_entry.get())
+                for band in magic_band_system.registered_bands:
+                    if band.band_id == band_id:
+                        location = band.current_location if band.current_location else "Location not available"
+                        tk.Label(location_window, text=f"Current Location: {location}").pack(pady=10)
+                        return
+                tk.Label(location_window, text="Band not found", fg="red").pack(pady=5)
+
+            tk.Button(location_window, text="Find Location", command=display_location).pack(pady=10)
+
+        def add_park_ticket():
+            ticket_window = tk.Toplevel(band_window)
+            ticket_window.title("Add Park Ticket")
+            ticket_window.geometry("400x300")
+
+            tk.Label(ticket_window, text="Enter Magic Band ID").pack(pady=5)
+            band_id_entry = tk.Entry(ticket_window)
+            band_id_entry.pack(pady=5)
+
+            tk.Label(ticket_window, text="Enter Park Name").pack(pady=5)
+            park_name_entry = tk.Entry(ticket_window)
+            park_name_entry.pack(pady=5)
+
+            def purchase_ticket():
+                band_id = int(band_id_entry.get())
+                park_name = park_name_entry.get()
+                for band in magic_band_system.registered_bands:
+                    if band.band_id == band_id:
+                        for park in disney_parks:
+                            if park.park_name == park_name:
+                                magic_band_system.purchase_park_tickets(band, park)
+                                tk.Label(ticket_window, text="Ticket Added Successfully", fg="green").pack(pady=5)
+                                return
+                tk.Label(ticket_window, text="Invalid Band or Park", fg="red").pack(pady=5)
+
+            tk.Button(ticket_window, text="Add Ticket", command=purchase_ticket).pack(pady=10)
+
         tk.Button(band_window, text="Provide New Band", command=provide_new_band).pack(pady=5)
-        tk.Button(band_window, text="Register Band", command=register_band).pack(pady=5)
+        tk.Button(band_window, text="View Guest Details", command=view_guest_details).pack(pady=5)
+        tk.Button(band_window, text="Find Band/Guest Location", command=find_location).pack(pady=5)
+        tk.Button(band_window, text="Add Park Ticket", command=add_park_ticket).pack(pady=5)
 
     def show_ride_management():
         ride_window = tk.Toplevel(emp_root)
@@ -443,7 +530,7 @@ def employee_interface():
             
             # Create a simple for loop for each restaurant at a park instead of doing it individually.
             for restaurant in park.restaurants:
-                def add_dish_window(restaurant):
+                def add_dish_window(restaurant=restaurant):
                     add_dish_win = tk.Toplevel(rest_detail_window)
                     # Again, Toplevel will open an overlapping window, but now, on a DOUBLE overlapping window
                     add_dish_win.title("Add Dish") # Triple Overlapping Window Name
@@ -465,14 +552,15 @@ def employee_interface():
 
                     tk.Button(add_dish_win, text="Add Dish", command=add_dish).pack(pady=10) # Button to add dish
 
-                def show_restaurant_info():
+                def show_restaurant_info(restaurant=restaurant):
                     info_window = tk.Toplevel(rest_detail_window) # Overlapping Window
                     info_window.title(f"{restaurant.name} Info") # Overlapping Window Name
                     info_window.geometry("800x600") # Overlapping Window Size
+                    
                     tk.Label(info_window, text=restaurant.get_restaurant_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
                     tk.Button(info_window, text="Add Dish", command=lambda: add_dish_window(restaurant)).pack(pady=10)
 
-                tk.Button(rest_detail_window, text=restaurant.name, command=show_restaurant_info).pack(pady=5)
+                tk.Button(rest_detail_window, text=restaurant.name, command=lambda r=restaurant:show_restaurant_info(r)).pack(pady=5)
 
         for park in disney_parks:
             tk.Button(restaurant_window, text=park.park_name, command=lambda p=park: show_restaurant_details(p)).pack(pady=10)
@@ -493,7 +581,7 @@ def employee_interface():
 
             # Create a simple for loop for each shop at a park instead of doing it individually.
             for shop in park.shops:
-                def add_item_window(shop):
+                def add_item_window(shop=shop):
                     add_item_win = tk.Toplevel(shop_detail_window) 
                     # Again, Toplevel will open an overlapping window, but now, on a DOUBLE overlapping window
                     add_item_win.title("Add Item") # Triple Overlapping Window Name
@@ -515,14 +603,15 @@ def employee_interface():
 
                     tk.Button(add_item_win, text="Add Item", command=add_item).pack(pady=10) # Button to add Item
 
-                def show_shop_info():
+                def show_shop_info(shop=shop):
                     info_window = tk.Toplevel(shop_detail_window) # Overlapping Window
                     info_window.title(f"{shop.name} Info") # Overlapping Window Name
                     info_window.geometry("800x600") # Overlapping Window Size
+                    
                     tk.Label(info_window, text=shop.get_shop_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
                     tk.Button(info_window, text="Add Item", command=lambda: add_item_window(shop)).pack(pady=10)
 
-                tk.Button(shop_detail_window, text=shop.name, command=show_shop_info).pack(pady=5)
+                tk.Button(shop_detail_window, text=shop.name, command=lambda s=shop: show_shop_info(s)).pack(pady=5)
 
         # Create a simple loop for each park instead of doing it individually
         # (This loop contains the for loop above because the command in button below calls the for loop)
