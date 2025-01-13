@@ -246,6 +246,14 @@ magic_band_1 = MagicBand(guest_1_ca)
 magic_band_2 = MagicBand(guest_2_ra)
 magic_band_3 = MagicBand(guest_3_aa)
 
+# --------------------------------------
+# SIMULATION EDIT: ALI KHAN 01/12/25
+# Links MagicBand to Guest (Guest Info)
+guest_1_ca.link_magic_band(magic_band_1)
+guest_2_ra.link_magic_band(magic_band_2)
+guest_3_aa.link_magic_band(magic_band_3)
+# --------------------------------------
+
 # Magic bands are registered in the disney system
 magic_band_system.register_band(magic_band_1)
 magic_band_system.register_band(magic_band_2)
@@ -333,11 +341,11 @@ def main_screen():
                 # You can also use Tkinter messagebox for an Error window to come up. That is also very simple
                 # However, I wanted to implement code that we have taken up in class to show understanding.
 
-        tk.Button(password_window, text="Login", command=validate_password).pack(pady=10) # Login Button
+        tk.Button(password_window, text="Login", command=lambda: validate_password()).pack(pady=10) # Login Button
 
     # Buttons for the Main Window
     tk.Label(root, text="Welcome to the Disney System", font=("Helvetica", 18)).pack(pady=20)
-    tk.Button(root, text="Employee Login", command=open_employee_interface, height=2, width=20).pack(pady=10)
+    tk.Button(root, text="Employee Login", command=lambda: open_employee_interface(), height=2, width=20).pack(pady=10)
     tk.Button(root, text="Guest Login", height=2, width=20).pack(pady=10)  # Placeholder (, command=lambda: pass)
 
     root.mainloop()
@@ -402,7 +410,8 @@ def employee_interface():
                 for guest in [guest_1_ca, guest_2_ra, guest_3_aa, guest_4_jt, guest_5_mb, guest_6_rg]:
                     if guest.guest_id == guest_id: # Checks to See if Guest Exists!
                         new_band = MagicBand(guest) # If so, creates object!
-                        tk.Label(new_band_window, text=f"Magic Band {new_band.band_id} created for {guest.name}", fg="green").pack(pady=5)
+                        guest.link_magic_band(new_band)
+                        tk.Label(new_band_window, text=f"Magic Band {new_band.band_id} created for and linked to {guest.name}", fg="green").pack(pady=5)
 
                         # Sub-option to register the new band
                         def register_band():
@@ -410,84 +419,97 @@ def employee_interface():
                             tk.Label(new_band_window, text=f"Band {new_band.band_id} registered successfully", fg="green").pack(pady=5)
 
                         tk.Label(new_band_window, text="This band must be registered into the system!", fg="blue").pack(pady=10)
-                        tk.Button(new_band_window, text="Register This Band", command=register_band).pack(pady=10)
+                        # In order for this MagicBand to be used, it must be put into magic_band_system.registered_bands!
+                        tk.Button(new_band_window, text="Register This Band", command=lambda: register_band()).pack(pady=10)
                         return
 
+                # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
                 tk.Label(new_band_window, text="Guest not found", fg="red").pack(pady=5)
 
-            tk.Button(new_band_window, text="Create Band", command=create_band).pack(pady=10)
+            tk.Button(new_band_window, text="Create Band", command=lambda: create_band()).pack(pady=10)
 
         def view_guest_details():
             guest_window = tk.Toplevel(band_window)
-            guest_window.title("View Guest Details")
-            guest_window.geometry("400x300")
+            # Again, Toplevel will open an overlapping window!
+            guest_window.title("View Guest Details") # Overlapping Window Name
+            guest_window.geometry("400x300") # Overlapping Window Size
 
             tk.Label(guest_window, text="Enter Guest ID").pack(pady=5)
-            guest_id_entry = tk.Entry(guest_window)
+            guest_id_entry = tk.Entry(guest_window) # Asks for Guest ID
             guest_id_entry.pack(pady=5)
 
             def display_details():
                 guest_id = guest_id_entry.get()
                 for guest in [guest_1_ca, guest_2_ra, guest_3_aa, guest_4_jt, guest_5_mb, guest_6_rg]:
-                    if guest.guest_id == guest_id:
+                    if guest.guest_id == guest_id: # Checks if the Guest Exists
                         details = f"Name: {guest.name}\nGuest ID: {guest.guest_id}\nMagic Band: {guest.magic_band.band_id if guest.magic_band else 'None'}"
                         tk.Label(guest_window, text=details).pack(pady=10)
                         return
+                
+                # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
                 tk.Label(guest_window, text="Guest not found", fg="red").pack(pady=5)
 
-            tk.Button(guest_window, text="View Details", command=display_details).pack(pady=10)
+            tk.Button(guest_window, text="View Details", command=lambda: display_details()).pack(pady=10)
 
         def find_location():
             location_window = tk.Toplevel(band_window)
-            location_window.title("Find Band/Guest Location")
-            location_window.geometry("400x200")
+            # Again, Toplevel will open an overlapping window!
+            location_window.title("Find Band/Guest Location") # Overlapping Window Name
+            location_window.geometry("400x200") # Overlapping Window Size
 
             tk.Label(location_window, text="Enter Magic Band ID").pack(pady=5)
-            band_id_entry = tk.Entry(location_window)
+            band_id_entry = tk.Entry(location_window) # Asks user for MagicBand ID
             band_id_entry.pack(pady=5)
 
             def display_location():
                 band_id = int(band_id_entry.get())
                 for band in magic_band_system.registered_bands:
-                    if band.band_id == band_id:
+                    if band.band_id == band_id: # Checks If the MagicBand is Registered
                         location = band.current_location if band.current_location else "Location not available"
+                        # Checks if the Band has a Location!
                         tk.Label(location_window, text=f"Current Location: {location}").pack(pady=10)
                         return
+                    
+                # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
                 tk.Label(location_window, text="Band not found", fg="red").pack(pady=5)
 
             tk.Button(location_window, text="Find Location", command=display_location).pack(pady=10)
 
         def add_park_ticket():
             ticket_window = tk.Toplevel(band_window)
-            ticket_window.title("Add Park Ticket")
-            ticket_window.geometry("400x300")
+            # Again, Toplevel will open an overlapping window!
+            ticket_window.title("Add Park Ticket") # Overlapping Window Name
+            ticket_window.geometry("400x300") # Overlapping Window Size
 
             tk.Label(ticket_window, text="Enter Magic Band ID").pack(pady=5)
-            band_id_entry = tk.Entry(ticket_window)
+            band_id_entry = tk.Entry(ticket_window) # Asks user for MagicBand ID
             band_id_entry.pack(pady=5)
 
             tk.Label(ticket_window, text="Enter Park Name").pack(pady=5)
-            park_name_entry = tk.Entry(ticket_window)
+            park_name_entry = tk.Entry(ticket_window) # Asks user for Desired Park Name
             park_name_entry.pack(pady=5)
 
             def purchase_ticket():
                 band_id = int(band_id_entry.get())
                 park_name = park_name_entry.get()
                 for band in magic_band_system.registered_bands:
-                    if band.band_id == band_id:
-                        for park in disney_parks:
-                            if park.park_name == park_name:
+                    if band.band_id == band_id: # Checks if the MagicBand is Registered
+                        for park in disney_parks: 
+                            if park.park_name == park_name: # Checks the name of Park
                                 magic_band_system.purchase_park_tickets(band, park)
                                 tk.Label(ticket_window, text="Ticket Added Successfully", fg="green").pack(pady=5)
                                 return
+                            
+                # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
                 tk.Label(ticket_window, text="Invalid Band or Park", fg="red").pack(pady=5)
 
-            tk.Button(ticket_window, text="Add Ticket", command=purchase_ticket).pack(pady=10)
+            tk.Button(ticket_window, text="Add Ticket", command=lambda: purchase_ticket()).pack(pady=10)
 
-        tk.Button(band_window, text="Provide New Band", command=provide_new_band).pack(pady=5)
-        tk.Button(band_window, text="View Guest Details", command=view_guest_details).pack(pady=5)
-        tk.Button(band_window, text="Find Band/Guest Location", command=find_location).pack(pady=5)
-        tk.Button(band_window, text="Add Park Ticket", command=add_park_ticket).pack(pady=5)
+        # Create Buttons for MagicBand Management
+        tk.Button(band_window, text="Provide New Band", command=lambda: provide_new_band()).pack(pady=5)
+        tk.Button(band_window, text="View Guest Details", command=lambda: view_guest_details()).pack(pady=5)
+        tk.Button(band_window, text="Find Band/Guest Location", command=lambda: find_location()).pack(pady=5)
+        tk.Button(band_window, text="Add Park Ticket", command=lambda: add_park_ticket()).pack(pady=5)
 
     def show_ride_management():
         ride_window = tk.Toplevel(emp_root)
@@ -550,7 +572,7 @@ def employee_interface():
                         restaurant.add_dish(dish_name, price) # Dish is created based on input of user
                         tk.Label(add_dish_win, text="Dish Added Successfully", fg="green").pack(pady=5)
 
-                    tk.Button(add_dish_win, text="Add Dish", command=add_dish).pack(pady=10) # Button to add dish
+                    tk.Button(add_dish_win, text="Add Dish", command=lambda: add_dish()).pack(pady=10) # Button to add dish
 
                 def show_restaurant_info(restaurant=restaurant):
                     info_window = tk.Toplevel(rest_detail_window) # Overlapping Window
@@ -601,7 +623,7 @@ def employee_interface():
                         shop.add_item(item_name, price) # Creates Item based on User Input
                         tk.Label(add_item_win, text="Item Added Successfully", fg="green").pack(pady=5)
 
-                    tk.Button(add_item_win, text="Add Item", command=add_item).pack(pady=10) # Button to add Item
+                    tk.Button(add_item_win, text="Add Item", command=lambda: add_item()).pack(pady=10) # Button to add Item
 
                 def show_shop_info(shop=shop):
                     info_window = tk.Toplevel(shop_detail_window) # Overlapping Window
@@ -646,12 +668,12 @@ def employee_interface():
 
     # Employee Interface Layout
     tk.Label(emp_root, text="Disney Employee Interface", font=("Helvetica", 18)).pack(pady=20)
-    tk.Button(emp_root, text="Park Overview", command=show_park_overview, width=20, height=2).pack(pady=10)
-    tk.Button(emp_root, text="Magic Band Info", command=show_magic_band_management, width=20, height=2).pack(pady=10)
-    tk.Button(emp_root, text="Ride Info", command=show_ride_management, width=20, height=2).pack(pady=10)
-    tk.Button(emp_root, text="Restaurant Info", command=show_restaurant_management, width=20, height=2).pack(pady=10)
-    tk.Button(emp_root, text="View Shops", command=show_shop_management, width=20, height=2).pack(pady=10)
-    tk.Button(emp_root, text="View Elements", command=show_element_management, width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="Park Overview", command=lambda: show_park_overview(), width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="Magic Band Info", command=lambda: show_magic_band_management(), width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="Ride Info", command=lambda: show_ride_management(), width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="Restaurant Info", command=lambda: show_restaurant_management(), width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="View Shops", command=lambda: show_shop_management(), width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="View Elements", command=lambda: show_element_management(), width=20, height=2).pack(pady=10)
 
     emp_root.mainloop()
 
