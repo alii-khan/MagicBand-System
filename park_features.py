@@ -1,4 +1,8 @@
-class Ride: # EDITED BY ALI KHAN > ADDED TOTAL VISTORS IN ***RIDE INFO***
+# EDITED BY ALI KHAN > ADDED TOTAL VISTORS IN ***RIDE INFO***
+# EDITED BY ALI KHAN > PRICE PARAMETER from :float --> any IN RESTAURANT ADD DISH
+# EDITED BY ALI KHAN > PRICE PARAMETER from :float --> any IN SHOP ADD ITEM
+
+class Ride: 
     def __init__(self, ride_name:str, height_requirement:int, capacity:int):
         self.ride_name = ride_name # The name of the ride.
         self.height_requirement = height_requirement # The height requirement for the ride.
@@ -39,7 +43,7 @@ class Restaurant:
     def __str__(self):
         return self.name
 
-    def add_dish(self, name_of_dish: str, price_of_dish: float):
+    def add_dish(self, name_of_dish: str, price_of_dish):
         self.dishes.append((name_of_dish, price_of_dish)) # Adds as a tuple.
 
     def get_restaurant_info(self):
@@ -73,7 +77,7 @@ class Shop:
     def __str__(self):
         return self.name
 
-    def add_item(self, name_of_item: str, price_of_item: float):
+    def add_item(self, name_of_item: str, price_of_item):
         self.items.append((name_of_item, price_of_item)) # Adds as a tuple.
 
     def get_shop_info(self):
