@@ -1,10 +1,11 @@
 # -----------------------------------------------
 # Created By: Ali Khan (& Mr. Alexander's Class)
-# Date: January 9-16, 2025
+# Date: January 9-19, 2025
 # DisneyWorld MagicBandSystem Culminating 
 # -----------------------------------------------
 
 from model_classes import *
+from park_features import *
 
 # USE CASE:
 # ------------------------------------
@@ -311,7 +312,6 @@ import tkinter as tk
 # from tkinter import ttk # This is just the themed window set
 from tkinter import PhotoImage
 
-
 # I didn't want to manually load a photo in every function/method: 
 #   Created an external function that I can simply call
 # Parameters are:
@@ -350,8 +350,12 @@ def main_screen():
 
         def validate_password():
             if password_entry.get() == "123": # Checks to see if Employee's password is correct.
-                password_window.destroy() # This is just going to collapse the widgets!
+                
+                password_window.withdraw() # This is just going to "collapse" the widget:
+                # Rather than destroying, this window is now unmapped and forgotten by the window manager!
+                # I can still bring it back with .deiconify() :)
                 employee_interface() # If password is correct, redirects you to the Employee UI!
+                
             else:
                 tk.Label(password_window, text="Incorrect Password", fg="red").pack()
                 # (I know it's unnecessary to expect invalid entries, but this helps me when testing code)
@@ -372,18 +376,24 @@ def main_screen():
         id_window.geometry("300x200") # Size of Window
 
         load_logo_image(id_window, "logo3.png")
-        tk.Label(id_window, text="Enter Guest ID").pack(pady=10) # Asks user to enter password
-        guest_id_entry = tk.Entry(id_window) # When typing, entry is censored by asterisks!
+        tk.Label(id_window, text="Enter Guest ID").pack(pady=10) # Asks user to enter Guest ID
+        guest_id_entry = tk.Entry(id_window) 
         guest_id_entry.pack()
 
         def validate_entry():
             guest_id = guest_id_entry.get()
             for guest in guests:
+                
                 if guest.guest_id == guest_id: # Checks to See if Guest Exists!
-                    id_window.destroy() # This is just going to collapse the widgets!
-                    guest_interface() # If password is correct, redirects you to the Employee UI!
-                else:
-                    tk.Label(id_window, text="Invalid Identification", fg="red").pack()
+                    
+                    id_window.withdraw() # This is just going to "collapse" the widget:
+                    # Rather than destroying, this window is now unmapped and forgotten by the window manager!
+                    # I can still bring it back with .deiconify() :)
+                    # [This also acts as a solution to the tk.TclError] 
+                    guest_interface(guest) # If password is correct, redirects you to the Guest UI!
+                    
+            else:
+                tk.Label(id_window, text="Invalid Identification", fg="red").pack()
                 # (I know it's unnecessary to expect invalid entries, but this helps me when testing code)
                 # You can also use Tkinter messagebox for an Error window to come up. That is also very simple
                 # However, I wanted to implement code that we have taken up in class to show understanding.
@@ -526,8 +536,8 @@ def employee_interface():
                 guest_id = guest_id_entry.get()
                 for guest in guests:
                     if guest.guest_id == guest_id: # Checks if the Guest Exists
-                        details = f"Name: {guest.name}\nGuest ID: {guest.guest_id}\nMagic Band: {guest.magic_band.band_id if guest.magic_band else 'None'}"
-                        info_label.config(text=details)  # Update the existing label with new guest details
+                        details = guest.get_profile_summary()
+                        info_label.configure(text=details)  # Update the existing label with new guest details
                         return
                 
                 # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
@@ -604,22 +614,33 @@ def employee_interface():
         ride_window.geometry("800x600") # Overlapping Window Size
 
         load_logo_image(ride_window, "logo.png") # Add logo image
-        tk.Label(ride_window, text="Select a Park to View Ride Info", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(ride_window, text="Select a Park to View Ride Queue & Info", font=("Helvetica", 14)).pack(pady=10)
 
         def show_ride_details(park):
             ride_detail_window = tk.Toplevel(ride_window)
             # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
             ride_detail_window.title(f"{park.park_name} Rides") # Double Overlapping Window Name
-            ride_detail_window.geometry("800x700") # Double Overlapping Window Size
+            ride_detail_window.geometry("600x450") # Double Overlapping Window Size
 
             load_logo_image(ride_detail_window, "logo.png") # Add logo image
-
+            
             # Create a simple for loop for each ride at a park instead of doing it individually
             for ride in park.rides:
-                tk.Button(ride_detail_window, text=ride.ride_name, command=lambda r=ride: tk.Label(ride_detail_window, text=r.get_ride_info(), justify="left", font=("Helvetica", 10)).pack(pady=5)).pack(pady=5)
+                tk.Button(ride_detail_window, text=ride.ride_name, command=lambda r=ride: new_info(r)).pack(pady=5)
                 # Here, the command isn't a function or method. It is itself a Label being packed onto the window!
                 # Rephrase: This button is packed on the screen. When clicked, it packs a label!
-
+                
+            # Labels BELOW Buttons    
+            ride_info_label = tk.Label(ride_detail_window, text="", justify="left", font=("Helvetica", 10))
+            ride_info_label.pack(pady=10)
+            ride_queue_label = tk.Label(ride_detail_window, text="", justify="left", font=("Helvetica", 10))
+            ride_queue_label.pack(pady=10)
+            
+            # Function to Rewrite Label (Depending on Selected Ride)
+            def new_info(r):
+                ride_info_label.configure(text=r.get_ride_info())
+                ride_queue_label.configure(text=f"\nQueue Length: {len(r.queue)}")
+            
         # Create a simple for loop for each park instead of doing it individually.
         # (This loop contains the for loop above because the command in button below calls the for loop)
         for park in disney_parks:
@@ -680,6 +701,8 @@ def employee_interface():
 
                 tk.Button(rest_detail_window, text=restaurant.name, command=lambda r=restaurant:show_restaurant_info(r)).pack(pady=5)
 
+        # Create a simple loop for each park instead of doing it individually
+        # (This loop contains the for loop above because the command in button below calls the for loop)
         for park in disney_parks:
             tk.Button(restaurant_window, text=park.park_name, command=lambda p=park: show_restaurant_details(p)).pack(pady=10)
 
@@ -776,7 +799,7 @@ def employee_interface():
     tk.Label(emp_root, text="Disney Employee Interface", font=("Helvetica", 18)).pack(pady=20)
     tk.Button(emp_root, text="Park Overview", command=lambda: show_park_overview(), width=20, height=2).pack(pady=10)
     tk.Button(emp_root, text="Magic Band Info", command=lambda: show_magic_band_management(), width=20, height=2).pack(pady=10)
-    tk.Button(emp_root, text="Ride Info", command=lambda: show_ride_management(), width=20, height=2).pack(pady=10)
+    tk.Button(emp_root, text="Rides: Queue & Info", command=lambda: show_ride_management(), width=20, height=2).pack(pady=10)
     tk.Button(emp_root, text="Restaurant Info", command=lambda: show_restaurant_management(), width=20, height=2).pack(pady=10)
     tk.Button(emp_root, text="View Shops", command=lambda: show_shop_management(), width=20, height=2).pack(pady=10)
     tk.Button(emp_root, text="View Elements", command=lambda: show_element_management(), width=20, height=2).pack(pady=10)
@@ -784,7 +807,7 @@ def employee_interface():
 # ------------------------------------------------------------------
 
 # Guest Interface
-def guest_interface():
+def guest_interface(guest):
     
     # Create Employee UI Window
     guest_root = tk.Toplevel()
@@ -822,12 +845,151 @@ def guest_interface():
             tk.Button(park_window, text=park.park_name, command=lambda p=park: show_park_details(p)).pack(pady=10)
         # In the command=lambda, you're stating p=park and sending it in as a parameter for the command
         
+    def rides():
+        ride_window = tk.Toplevel(guest_root)
+        # Again, Toplevel will open an overlapping window!
+        ride_window.title("Ride Management") # Overlapping Window Name
+        ride_window.geometry("800x600") # Overlapping Window Size
+
+        load_logo_image(ride_window, "logo.png") # Add logo image
+        tk.Label(ride_window, text="Select a Park to View Ride Queue & Info", font=("Helvetica", 14)).pack(pady=10)
+
+        def show_ride_details(park):
+            ride_detail_window = tk.Toplevel(ride_window)
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            ride_detail_window.title(f"{park.park_name} Rides") # Double Overlapping Window Name
+            ride_detail_window.geometry("600x450") # Double Overlapping Window Size
+
+            load_logo_image(ride_detail_window, "logo.png") # Add logo image
+            
+            # Create a simple for loop for each ride at a park instead of doing it individually
+            for ride in park.rides:
+                tk.Button(ride_detail_window, text=ride.ride_name, command=lambda r=ride: new_info(r)).pack(pady=5)
+                # Here, the command isn't a function or method. It is itself a Label being packed onto the window!
+                # Rephrase: This button is packed on the screen. When clicked, it packs a label!
+                
+            # Labels BELOW Buttons    
+            ride_info_label = tk.Label(ride_detail_window, text="", justify="left", font=("Helvetica", 10))
+            ride_info_label.pack(pady=10)
+            ride_queue_label = tk.Label(ride_detail_window, text="", justify="left", font=("Helvetica", 10))
+            ride_queue_label.pack(pady=10)
+            
+            # Function to Rewrite Label (Depending on Selected Ride)
+            def new_info(r):
+                ride_info_label.configure(text=r.get_ride_info())
+                ride_queue_label.configure(text=f"\nQueue Length: {len(r.queue)}")
+            
+        # Create a simple for loop for each park instead of doing it individually.
+        # (This loop contains the for loop above because the command in button below calls the for loop)
+        for park in disney_parks:
+            tk.Button(ride_window, text=park.park_name, command=lambda p=park: show_ride_details(p)).pack(pady=5)
         
+    def restaurants():
+        restaurant_window = tk.Toplevel(guest_root)
+        # Again, Toplevel will open an overlapping window!
+        restaurant_window.title("Restaurant Management") # Overlapping Window Name
+        restaurant_window.geometry("800x600") # Overlapping Window Size
+
+        load_logo_image(restaurant_window, "logo.png") # Add logo image
+        tk.Label(restaurant_window, text="Select a Park to View Restaurants", font=("Helvetica", 14)).pack(pady=10)
+
+        def show_restaurant_details(park):
+            rest_detail_window = tk.Toplevel(restaurant_window)
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            rest_detail_window.title(f"{park.park_name} Restaurants") # Double Overlapping Window Name
+            rest_detail_window.geometry("800x600") # Double Overlapping Window Size
+            
+            load_logo_image(rest_detail_window, "logo.png") # Add logo image
+            
+            # Create a simple for loop for each restaurant at a park instead of doing it individually.
+            for restaurant in park.restaurants:
+
+                def show_restaurant_info(restaurant=restaurant):
+                    info_window = tk.Toplevel(rest_detail_window) # Overlapping Window
+                    info_window.title(f"{restaurant.name} Info") # Overlapping Window Name
+                    info_window.geometry("800x600") # Overlapping Window Size
+                    
+                    load_logo_image(info_window, "logo.png") # Add logo image
+                    tk.Label(info_window, text=restaurant.get_restaurant_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
+
+                tk.Button(rest_detail_window, text=restaurant.name, command=lambda r=restaurant:show_restaurant_info(r)).pack(pady=5)
+
+        # Create a simple loop for each park instead of doing it individually
+        # (This loop contains the for loop above because the command in button below calls the for loop)
+        for park in disney_parks:
+            tk.Button(restaurant_window, text=park.park_name, command=lambda p=park: show_restaurant_details(p)).pack(pady=10)      
+        
+    def shops():
+        shop_window = tk.Toplevel(guest_root)
+        # Again, Toplevel will open an overlapping window!
+        shop_window.title("Shop Management") # Overlapping Window Name
+        shop_window.geometry("800x600") # Overlapping Window Size
+
+        load_logo_image(shop_window, "logo.png") # Add logo image
+        tk.Label(shop_window, text="Select a Park to View Shops", font=("Helvetica", 14)).pack(pady=10)
+
+        def show_shop_details(park):
+            shop_detail_window = tk.Toplevel(shop_window)
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            shop_detail_window.title(f"{park.park_name} Shops") # Double Overlapping Window Name
+            shop_detail_window.geometry("800x600") # Double Overlapping Window Size
+
+            load_logo_image(shop_detail_window, "logo.png") # Add logo image
+            # Create a simple for loop for each shop at a park instead of doing it individually.
+            for shop in park.shops:
+
+                def show_shop_info(shop=shop):
+                    info_window = tk.Toplevel(shop_detail_window) # Overlapping Window
+                    info_window.title(f"{shop.name} Info") # Overlapping Window Name
+                    info_window.geometry("800x600") # Overlapping Window Size
+                    
+                    load_logo_image(info_window, "logo.png") # Add logo image
+                    tk.Label(info_window, text=shop.get_shop_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
+
+                tk.Button(shop_detail_window, text=shop.name, command=lambda s=shop: show_shop_info(s)).pack(pady=5)
+
+        # Create a simple loop for each park instead of doing it individually
+        # (This loop contains the for loop above because the command in button below calls the for loop)
+        for park in disney_parks:
+            tk.Button(shop_window, text=park.park_name, command=lambda p=park: show_shop_details(p)).pack(pady=10)        
+        
+    def elements():
+        element_window = tk.Toplevel(guest_root)
+        # Again, Toplevel will open an overlapping window!
+        element_window.title("Park Elements") # Overlapping Window Name
+        element_window.geometry("800x600") # Overlapping Window Size
+
+        load_logo_image(element_window, "logo.png") # Add logo image
+        tk.Label(element_window, text="Select a Park to View Elements", font=("Helvetica", 14)).pack(pady=10)
+
+        def show_element_details(park):
+            element_detail_window = tk.Toplevel(element_window)
+            # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
+            element_detail_window.title(f"{park.park_name} Elements") # Double Overlapping Window Name
+            element_detail_window.geometry("800x600") # Double Overlapping Window Size
+
+            load_logo_image(element_detail_window, "logo.png") # Add logo image
+        
+            # Gather the Required Information to Display on Screen
+            # Simple for loop iterating through element names in a park (from parameter)
+            details = "\n\n\n\n".join([elem.name for elem in park.elements])
+            
+            # Display Details in a Single Label
+            tk.Label(element_detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20)
+
+        # Create a simple for loop for each park instead of making each button individually
+        for park in disney_parks:
+            tk.Button(element_window, text=park.park_name, command=lambda p=park: show_element_details(p)).pack(pady=10)   
         
     load_logo_image(guest_root, "characters.png") # Add characters image
     load_logo_image(guest_root, "logo.png") # Add logo image
-    tk.Label(guest_root, text="Disney Guest Interface", font=("Helvetica", 18)).pack(pady=20)
+    tk.Label(guest_root, text="Disney Guest Interface", font=("Helvetica", 18)).pack(pady=5)
+    tk.Label(guest_root, text=f"Welcome, {guest.name}!", font=("Helvetica", 10)).pack()
     tk.Button(guest_root, text="Park Overview", command=lambda: show_park_overview(), width=20, height=2).pack(pady=10)
+    tk.Button(guest_root, text="Rides: Queue & Info", command=lambda: rides(), width=20, height=2).pack(pady=10)
+    tk.Button(guest_root, text="Restaurant Info", command=lambda: restaurants(), width=20, height=2).pack(pady=10)
+    tk.Button(guest_root, text="View Shops", command=lambda: shops(), width=20, height=2).pack(pady=10)
+    tk.Button(guest_root, text="View Elements", command=lambda: elements(), width=20, height=2).pack(pady=10)
     
     
 # Main Program Execution

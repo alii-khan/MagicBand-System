@@ -90,7 +90,7 @@ class Guest():
     def get_profile_summary(self):
        
         # If Test MagicBand Class / Objects ARE Created:
-        return (f"\nGuest ID: {self.guest_id}\nName: {self.name}\nAge: {self.age}\nBand ID: {self.magic_band.band_id}\nPreferences: {self.preferences}")
+        return (f"\nGuest ID: {self.guest_id}\nName: {self.name}\nAge: {self.age}\nBand ID: {self.magic_band.band_id if self.magic_band else 'None'}\nPreferences: {self.preferences}")
 
 class MagicBand():
    

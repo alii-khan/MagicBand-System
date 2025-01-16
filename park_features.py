@@ -1,6 +1,7 @@
-# EDITED BY ALI KHAN > ADDED TOTAL VISTORS IN ***RIDE INFO***
 # EDITED BY ALI KHAN > PRICE PARAMETER from :float --> any IN RESTAURANT ADD DISH
 # EDITED BY ALI KHAN > PRICE PARAMETER from :float --> any IN SHOP ADD ITEM
+
+from model_classes import *
 
 class Ride: 
     def __init__(self, ride_name:str, height_requirement:int, capacity:int):
@@ -27,9 +28,8 @@ class Ride:
 Ride name: {self.ride_name}
 Height Requirement: {self.height_requirement}
 Capacity: {self.capacity}
-Queue Length: {len(self.queue)}
 Total Visitors: {self.total_visitors} 
-""" # EDITED BY ALI KHAN > ADDED TOTAL VISTORS IN ***RIDE INFO***
+"""
 
 class Restaurant:
     def __init__(self, name: str):
