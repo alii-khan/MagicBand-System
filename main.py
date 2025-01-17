@@ -308,6 +308,83 @@ guests = [guest_1_ca, guest_2_ra, guest_3_aa, guest_4_jt, guest_5_mb, guest_6_rg
 
 # ------------------------------------------------------------------------------------------------
 
+tk_colours =['snow', 'ghost white', 'white smoke', 'gainsboro', 'floral white', 'old lace',
+'linen', 'antique white', 'papaya whip', 'blanched almond', 'bisque', 'peach puff',
+'navajo white', 'lemon chiffon', 'mint cream', 'azure', 'alice blue', 'lavender',
+'lavender blush', 'misty rose', 'dark slate gray', 'dim gray', 'slate gray',
+'light slate gray', 'gray', 'light grey', 'midnight blue', 'navy', 'cornflower blue', 'dark slate blue',
+'slate blue', 'medium slate blue', 'light slate blue', 'medium blue', 'royal blue',  'blue',
+'dodger blue', 'deep sky blue', 'sky blue', 'light sky blue', 'steel blue', 'light steel blue',
+'light blue', 'powder blue', 'pale turquoise', 'dark turquoise', 'medium turquoise', 'turquoise',
+'cyan', 'light cyan', 'cadet blue', 'medium aquamarine', 'aquamarine', 'dark green', 'dark olive green',
+'dark sea green', 'sea green', 'medium sea green', 'light sea green', 'pale green', 'spring green',
+'lawn green', 'medium spring green', 'green yellow', 'lime green', 'yellow green',
+'forest green', 'olive drab', 'dark khaki', 'khaki', 'pale goldenrod', 'light goldenrod yellow',
+'light yellow', 'yellow', 'gold', 'light goldenrod', 'goldenrod', 'dark goldenrod', 'rosy brown',
+'indian red', 'saddle brown', 'sandy brown',
+'dark salmon', 'salmon', 'light salmon', 'orange', 'dark orange',
+'coral', 'light coral', 'tomato', 'orange red', 'red', 'hot pink', 'deep pink', 'pink', 'light pink',
+'pale violet red', 'maroon', 'medium violet red', 'violet red',
+'medium orchid', 'dark orchid', 'dark violet', 'blue violet', 'purple', 'medium purple',
+'thistle', 'snow2', 'snow3',
+'snow4', 'seashell2', 'seashell3', 'seashell4', 'AntiqueWhite1', 'AntiqueWhite2',
+'AntiqueWhite3', 'AntiqueWhite4', 'bisque2', 'bisque3', 'bisque4', 'PeachPuff2',
+'PeachPuff3', 'PeachPuff4', 'NavajoWhite2', 'NavajoWhite3', 'NavajoWhite4',
+'LemonChiffon2', 'LemonChiffon3', 'LemonChiffon4', 'cornsilk2', 'cornsilk3',
+'cornsilk4', 'ivory2', 'ivory3', 'ivory4', 'honeydew2', 'honeydew3', 'honeydew4',
+'LavenderBlush2', 'LavenderBlush3', 'LavenderBlush4', 'MistyRose2', 'MistyRose3',
+'MistyRose4', 'azure2', 'azure3', 'azure4', 'SlateBlue1', 'SlateBlue2', 'SlateBlue3',
+'SlateBlue4', 'RoyalBlue1', 'RoyalBlue2', 'RoyalBlue3', 'RoyalBlue4', 'blue2', 'blue4',
+'DodgerBlue2', 'DodgerBlue3', 'DodgerBlue4', 'SteelBlue1', 'SteelBlue2',
+'SteelBlue3', 'SteelBlue4', 'DeepSkyBlue2', 'DeepSkyBlue3', 'DeepSkyBlue4',
+'SkyBlue1', 'SkyBlue2', 'SkyBlue3', 'SkyBlue4', 'LightSkyBlue1', 'LightSkyBlue2',
+'LightSkyBlue3', 'LightSkyBlue4', 'SlateGray1', 'SlateGray2', 'SlateGray3',
+'SlateGray4', 'LightSteelBlue1', 'LightSteelBlue2', 'LightSteelBlue3',
+'LightSteelBlue4', 'LightBlue1', 'LightBlue2', 'LightBlue3', 'LightBlue4',
+'LightCyan2', 'LightCyan3', 'LightCyan4', 'PaleTurquoise1', 'PaleTurquoise2',
+'PaleTurquoise3', 'PaleTurquoise4', 'CadetBlue1', 'CadetBlue2', 'CadetBlue3',
+'CadetBlue4', 'turquoise1', 'turquoise2', 'turquoise3', 'turquoise4', 'cyan2', 'cyan3',
+'cyan4', 'DarkSlateGray1', 'DarkSlateGray2', 'DarkSlateGray3', 'DarkSlateGray4',
+'aquamarine2', 'aquamarine4', 'DarkSeaGreen1', 'DarkSeaGreen2', 'DarkSeaGreen3',
+'DarkSeaGreen4', 'SeaGreen1', 'SeaGreen2', 'SeaGreen3', 'PaleGreen1', 'PaleGreen2',
+'PaleGreen3', 'PaleGreen4', 'SpringGreen2', 'SpringGreen3', 'SpringGreen4',
+'green2', 'green3', 'green4', 'chartreuse2', 'chartreuse3', 'chartreuse4',
+'OliveDrab1', 'OliveDrab2', 'OliveDrab4', 'DarkOliveGreen1', 'DarkOliveGreen2',
+'DarkOliveGreen3', 'DarkOliveGreen4', 'khaki1', 'khaki2', 'khaki3', 'khaki4',
+'LightGoldenrod1', 'LightGoldenrod2', 'LightGoldenrod3', 'LightGoldenrod4',
+'LightYellow2', 'LightYellow3', 'LightYellow4', 'yellow2', 'yellow3', 'yellow4',
+'gold2', 'gold3', 'gold4', 'goldenrod1', 'goldenrod2', 'goldenrod3', 'goldenrod4',
+'DarkGoldenrod1', 'DarkGoldenrod2', 'DarkGoldenrod3', 'DarkGoldenrod4',
+'RosyBrown1', 'RosyBrown2', 'RosyBrown3', 'RosyBrown4', 'IndianRed1', 'IndianRed2',
+'IndianRed3', 'IndianRed4', 'sienna1', 'sienna2', 'sienna3', 'sienna4', 'burlywood1',
+'burlywood2', 'burlywood3', 'burlywood4', 'wheat1', 'wheat2', 'wheat3', 'wheat4', 'tan1',
+'tan2', 'tan4', 'chocolate1', 'chocolate2', 'chocolate3', 'firebrick1', 'firebrick2',
+'firebrick3', 'firebrick4', 'brown1', 'brown2', 'brown3', 'brown4', 'salmon1', 'salmon2',
+'salmon3', 'salmon4', 'LightSalmon2', 'LightSalmon3', 'LightSalmon4', 'orange2',
+'orange3', 'orange4', 'DarkOrange1', 'DarkOrange2', 'DarkOrange3', 'DarkOrange4',
+'coral1', 'coral2', 'coral3', 'coral4', 'tomato2', 'tomato3', 'tomato4', 'OrangeRed2',
+'OrangeRed3', 'OrangeRed4', 'red2', 'red3', 'red4', 'DeepPink2', 'DeepPink3', 'DeepPink4',
+'HotPink1', 'HotPink2', 'HotPink3', 'HotPink4', 'pink1', 'pink2', 'pink3', 'pink4',
+'LightPink1', 'LightPink2', 'LightPink3', 'LightPink4', 'PaleVioletRed1',
+'PaleVioletRed2', 'PaleVioletRed3', 'PaleVioletRed4', 'maroon1', 'maroon2',
+'maroon3', 'maroon4', 'VioletRed1', 'VioletRed2', 'VioletRed3', 'VioletRed4',
+'magenta2', 'magenta3', 'magenta4', 'orchid1', 'orchid2', 'orchid3', 'orchid4', 'plum1',
+'plum2', 'plum3', 'plum4', 'MediumOrchid1', 'MediumOrchid2', 'MediumOrchid3',
+'MediumOrchid4', 'DarkOrchid1', 'DarkOrchid2', 'DarkOrchid3', 'DarkOrchid4',
+'purple1', 'purple2', 'purple3', 'purple4', 'MediumPurple1', 'MediumPurple2',
+'MediumPurple3', 'MediumPurple4', 'thistle1', 'thistle2', 'thistle3', 'thistle4',
+'gray1', 'gray2', 'gray3', 'gray4', 'gray5', 'gray6', 'gray7', 'gray8', 'gray9', 'gray10',
+'gray11', 'gray12', 'gray13', 'gray14', 'gray15', 'gray16', 'gray17', 'gray18', 'gray19',
+'gray20', 'gray21', 'gray22', 'gray23', 'gray24', 'gray25', 'gray26', 'gray27', 'gray28',
+'gray29', 'gray30', 'gray31', 'gray32', 'gray33', 'gray34', 'gray35', 'gray36', 'gray37',
+'gray38', 'gray39', 'gray40', 'gray42', 'gray43', 'gray44', 'gray45', 'gray46', 'gray47',
+'gray48', 'gray49', 'gray50', 'gray51', 'gray52', 'gray53', 'gray54', 'gray55', 'gray56',
+'gray57', 'gray58', 'gray59', 'gray60', 'gray61', 'gray62', 'gray63', 'gray64', 'gray65',
+'gray66', 'gray67', 'gray68', 'gray69', 'gray70', 'gray71', 'gray72', 'gray73', 'gray74',
+'gray75', 'gray76', 'gray77', 'gray78', 'gray79', 'gray80', 'gray81', 'gray82', 'gray83',
+'gray84', 'gray85', 'gray86', 'gray87', 'gray88', 'gray89', 'gray90', 'gray91', 'gray92',
+'gray93', 'gray94', 'gray95', 'gray97', 'gray98', 'gray99']
+
 import tkinter as tk
 # from tkinter import ttk # This is just the themed window set
 from tkinter import PhotoImage
@@ -373,14 +450,25 @@ def main_screen():
         # Learnt and Obtained Understanding from: https://www.geeksforgeeks.org/python-tkinter-toplevel-widget/
         
         id_window.title("Guest Login") # Title for Overlapped Window
-        id_window.geometry("300x200") # Size of Window
+        id_window.geometry("300x300") # Size of Window
 
         load_logo_image(id_window, "logo3.png")
         tk.Label(id_window, text="Enter Guest ID").pack(pady=10) # Asks user to enter Guest ID
         guest_id_entry = tk.Entry(id_window) 
         guest_id_entry.pack()
+        
+        tk.Label(id_window, text="Enter Your Favourite Colour! (Optional)").pack(pady=10) # Asks user to enter Guest ID
+        fav_colour_entry = tk.Entry(id_window) 
+        fav_colour_entry.pack()
 
         def validate_entry():
+            
+            # Check if Favourite Colour is a (Valid) Tkinter Colour! (For Background) --> Personalization
+            if fav_colour_entry.get().lower() in tk_colours:
+                fav_colour = (fav_colour_entry.get()).lower()
+            else: # If not, no background colour :(
+                fav_colour = None
+                    
             guest_id = guest_id_entry.get()
             for guest in guests:
                 
@@ -390,7 +478,7 @@ def main_screen():
                     # Rather than destroying, this window is now unmapped and forgotten by the window manager!
                     # I can still bring it back with .deiconify() :)
                     # [This also acts as a solution to the tk.TclError] 
-                    guest_interface(guest) # If password is correct, redirects you to the Guest UI!
+                    guest_interface(guest, fav_colour) # If password is correct, redirects you to the Guest UI!
                     
             else:
                 tk.Label(id_window, text="Invalid Identification", fg="red").pack()
@@ -473,14 +561,22 @@ def employee_interface():
             tk.Label(create_guest_window, text="Enter Guest Age").pack(pady=5)
             guest_age_entry = tk.Entry(create_guest_window) # Asks for Guest Age
             guest_age_entry.pack(pady=5)
+            
+            label = tk.Label(create_guest_window, text="")
+            label.pack(pady=5)
 
             def add_guest():
                 name = guest_name_entry.get()
-                age = int(guest_age_entry.get())
-                new_guest = Guest(name, age) # Creates New Guest Object
-                guests.append(new_guest) # Adds to list of Guests so Guest ID can be used!
-                tk.Label(create_guest_window, text=f"Guest created with ID: {new_guest.guest_id}", fg="green").pack(pady=5)
+                age = guest_age_entry.get()
+                if age.isdigit(): # isdigit checks if a string is all numbers!! (BUILT-IN PYTHON FUNCTION)
+                    new_guest = Guest(name, int(age)) # Creates New Guest Object
+                    guests.append(new_guest) # Adds to list of Guests so Guest ID can be used!
+                    label.configure(text=f"Guest created with ID: {new_guest.guest_id}", fg="green")
+                    return
+                
+                label.configure(text=f"Invalid Input", fg="red")
 
+            # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
             tk.Button(create_guest_window, text="Create Guest", command=lambda: add_guest()).pack(pady=10)
 
         def provide_new_band():
@@ -494,28 +590,85 @@ def employee_interface():
             guest_id_entry = tk.Entry(new_band_window) # Asks user for Guest ID
             guest_id_entry.pack(pady=5)
 
+            label = tk.Label(new_band_window, text="")
+            label.pack(pady=5)
+            label2 = tk.Label(new_band_window, text="")
+            label2.pack(pady=5)
+
             def create_band():
+                
                 guest_id = guest_id_entry.get()
                 for guest in guests:
                     if guest.guest_id == guest_id: # Checks to See if Guest Exists!
                         new_band = MagicBand(guest) # If so, creates object!
                         guest.link_magic_band(new_band)
-                        tk.Label(new_band_window, text=f"Magic Band {new_band.band_id} created for and linked to {guest.name}", fg="green").pack(pady=5)
-
-                        # Sub-option to register the new band
-                        def register_band():
-                            magic_band_system.register_band(new_band)
-                            tk.Label(new_band_window, text=f"Band {new_band.band_id} registered successfully", fg="green").pack(pady=5)
-
-                        tk.Label(new_band_window, text="This band must be registered into the system!", fg="blue").pack(pady=10)
-                        # In order for this MagicBand to be used, it must be put into magic_band_system.registered_bands!
-                        tk.Button(new_band_window, text="Register This Band", command=lambda: register_band()).pack(pady=10)
+                        magic_band_system.register_band(new_band)
+                        label.configure(text=f"Magic Band {new_band.band_id} created for and linked to {guest.name}", fg="green")
+                        label2.configure(text=f"Band {new_band.band_id} automatically registered successfully", fg="blue")
                         return
 
                 # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
-                tk.Label(new_band_window, text="Guest not found", fg="red").pack(pady=5)
+                label.configure(text="Guest not found", fg="red")
+                label2.configure(text="")
 
             tk.Button(new_band_window, text="Create Band", command=lambda: create_band()).pack(pady=10)
+            
+        def relink_band():
+            relink_window = tk.Toplevel(band_window)
+            relink_window.title("Relink MagicBand")
+            relink_window.geometry("400x300")
+
+            load_logo_image(relink_window, "logo2.png")
+            tk.Label(relink_window, text="Enter Guest ID").pack(pady=5)
+            guest_id_entry = tk.Entry(relink_window)
+            guest_id_entry.pack(pady=5)
+
+            tk.Label(relink_window, text="Enter MagicBand ID to Relink").pack(pady=5)
+            band_id_entry = tk.Entry(relink_window)
+            band_id_entry.pack(pady=5)
+            
+            label = tk.Label(relink_window, text="")
+            label.pack(pady=5)
+
+            def relink():
+                guest_id = guest_id_entry.get()
+                band_id = int(band_id_entry.get())
+
+                # Set Needed Variables to None (They Will Change Depending on User Input)
+                guest_to_link = None
+                band_to_relink = None
+                original_owner = None
+
+                # Valid Guest ID --> Valid Guest to Link!
+                for guest in guests:
+                    if guest.guest_id == guest_id:
+                        guest_to_link = guest
+
+                # Valid MagicBand ID --> Valid MagicBand to Relink!
+                for band in magic_band_system.registered_bands:
+                    if band.band_id == band_id:
+                        band_to_relink = band
+                        
+                        # Looking for Whoever Currently Has this Band
+                        for g in guests: 
+                            if g.magic_band == band:
+                                original_owner = g
+
+                # If there's a valid guest and band, original owner loses their band and guest gets the relinked band!
+                if guest_to_link != None and band_to_relink != None:
+                    # According to OUR Program's logic, the MagicBands are ALWAYS "assigned"
+                    # But if that wasn't the case, the following "if" statement becomes crucial
+                    # (Kept it anyways because it makes me comfortable: Knowing an error cannot occur!)
+                    if original_owner != None: 
+                        original_owner.magic_band = None
+                        guest_to_link.magic_band = band_to_relink
+                        label.configure(text=f"MagicBand {band_id} linked to {guest_to_link.name}", fg="green")
+                        return
+
+                # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
+                label.configure(text="Invalid Input", fg="red")
+
+            tk.Button(relink_window, text="Relink Band", command=lambda: relink()).pack(pady=10)
 
         def view_guest_details():
             guest_window = tk.Toplevel(band_window)
@@ -598,14 +751,64 @@ def employee_interface():
                 tk.Label(ticket_window, text="Invalid Band or Park", fg="red").pack(pady=5)
 
             tk.Button(ticket_window, text="Add Ticket", command=lambda: purchase_ticket()).pack(pady=10)
+            
+        def view_usage_report():
+            report_window = tk.Toplevel(band_window)
+            # Again, Toplevel will open an overlapping window!
+            report_window.title("View Usage Report") # Overlapping Window Name
+            report_window.geometry("400x450") # Overlapping Window Size
+
+            load_logo_image(report_window, "logo2.png") # Add logo image
+            tk.Label(report_window, text="Enter MagicBand ID").pack(pady=5)
+            band_id_entry = tk.Entry(report_window) # Asks for Band ID
+            band_id_entry.pack(pady=5)
+            
+            tk.Button(report_window, text="View Magic Band Report", command=lambda: display_report()).pack(pady=10)
+            info_label = tk.Label(report_window, text="")
+            info_label.pack(pady=10)
+
+            def display_report():
+                band_id = int(band_id_entry.get())
+                for band in magic_band_system.registered_bands:
+                    if band.band_id == band_id: # Checks if the Magic Band is Registered
+                        report = "\n".join(band.useage_history) # Had to figure out a way to not show the {}, [] (etc) from the list
+                        
+                        # If the Band has been Used
+                        if band.useage_history != []:
+                            info_label.configure(text = report, fg = "black")  # Update the existing label with new Band Report
+                            return
+                        
+                        # If the Band is Newly Created and Unused
+                        else:
+                            info_label.configure(text = "No Information Found! :(", fg = "black")  # Update the existing label with new Band Report
+                            return
+                
+                # Error message, helps me when testing. (Still avoiding messagebox in Employee UI)
+                info_label.configure(text = "Band not found", fg="red")
+
+        def show_system_report():
+            system_report_window = tk.Toplevel(band_window)
+            # Again, Toplevel will open an overlapping window, but now, on an overlapping window!
+            system_report_window.title(f"Magicband System Report") # Name of Double Overlapping Window
+            system_report_window.geometry("400x200")
+            
+            # Gather the Required Information to Show on Window
+            # In each line, there a for loop, iterating through all rides, restaurants, shops, and elements (RESPECTIVELY)
+            system_report = magic_band_system.generate_usage_report()
+
+            # In a single label, show the MagicBand System Report!
+            load_logo_image(system_report_window, "logo2.png") # Add logo image
+            tk.Label(system_report_window, text=system_report, justify="center", font=("Helvetica", 12)).pack(pady=20, padx=20)
 
         # Create Buttons for MagicBand Management
-        
         tk.Button(band_window, text="Create New Guest", command=lambda: create_new_guest()).pack(pady=5)
         tk.Button(band_window, text="Provide New Band", command=lambda: provide_new_band()).pack(pady=5)
+        tk.Button(band_window, text="Relink Band", command=lambda: relink_band()).pack(pady=5)
         tk.Button(band_window, text="View Guest Details", command=lambda: view_guest_details()).pack(pady=5)
         tk.Button(band_window, text="Find Band/Guest Location", command=lambda: find_location()).pack(pady=5)
         tk.Button(band_window, text="Add Park Ticket", command=lambda: add_park_ticket()).pack(pady=5)
+        tk.Button(band_window, text="View Usage Reports", command=lambda: view_usage_report()).pack(pady=5)
+        tk.Button(band_window, text="View System Report", command=lambda: show_system_report()).pack(pady=5)
 
     def show_ride_management():
         ride_window = tk.Toplevel(emp_root)
@@ -744,7 +947,7 @@ def employee_interface():
                         price = round(float(price_entry.get()), 2)
                         shop.add_item(item_name, price) # Creates Item based on User Input
                         tk.Label(add_item_win, text="Item Added Successfully", fg="green").pack(pady=5)
-                        tk.Label(add_item_win, text="Reload Restaurant Window To See Updated Inventory!", fg="purple").pack(pady=5)
+                        tk.Label(add_item_win, text="Reload Shop Window To See Updated Inventory!", fg="purple").pack(pady=5)
 
                     tk.Button(add_item_win, text="Add Item", command=lambda: add_item()).pack(pady=10) # Button to add Item
 
@@ -807,24 +1010,24 @@ def employee_interface():
 # ------------------------------------------------------------------
 
 # Guest Interface
-def guest_interface(guest):
+def guest_interface(guest, fav_colour):
     
     # Create Employee UI Window
-    guest_root = tk.Toplevel()
+    guest_root = tk.Toplevel(bg=fav_colour if fav_colour else None)
     guest_root.title("Disney Guest Interface") # Window Name
     guest_root.geometry("1000x700") # Window Size
 
     def show_park_overview():
-        park_window = tk.Toplevel(guest_root)
+        park_window = tk.Toplevel(guest_root, bg=fav_colour if fav_colour else None)
         # Again, Toplevel will open an overlapping window!
         park_window.title("Park Overview") # Name of Overlapping Window
         park_window.geometry("800x600") # Window Size
 
         load_logo_image(park_window, "logo.png") # Add logo image
-        tk.Label(park_window, text="Select a Park to View Details", font=("Helvetica", 14)).pack(pady=10) # Label on Overlapping Window
+        tk.Label(park_window, text="Select a Park to View Details", bg=fav_colour if fav_colour else None, font=("Helvetica", 14)).pack(pady=10) # Label on Overlapping Window
 
         def show_park_details(park):
-            detail_window = tk.Toplevel(park_window)
+            detail_window = tk.Toplevel(park_window, bg=fav_colour if fav_colour else None)
             # Again, Toplevel will open an overlapping window, but now, on an overlapping window!
             detail_window.title(f"{park.park_name} Details") # Name of Double Overlapping Window
             detail_window.geometry("800x600")
@@ -838,7 +1041,7 @@ def guest_interface(guest):
 
             # In a single label, show all details!
             load_logo_image(detail_window, "logo.png") # Add logo image
-            tk.Label(detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20, padx=20)
+            tk.Label(detail_window, text=details, bg=fav_colour if fav_colour else None, justify="center", font=("Helvetica", 12)).pack(pady=20, padx=20)
 
         # Rather than individually creating all overlapping windows for the parks, make a simple for loop!
         for park in disney_parks:
@@ -846,16 +1049,16 @@ def guest_interface(guest):
         # In the command=lambda, you're stating p=park and sending it in as a parameter for the command
         
     def rides():
-        ride_window = tk.Toplevel(guest_root)
+        ride_window = tk.Toplevel(guest_root, bg=fav_colour if fav_colour else None)
         # Again, Toplevel will open an overlapping window!
         ride_window.title("Ride Management") # Overlapping Window Name
         ride_window.geometry("800x600") # Overlapping Window Size
 
         load_logo_image(ride_window, "logo.png") # Add logo image
-        tk.Label(ride_window, text="Select a Park to View Ride Queue & Info", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(ride_window, text="Select a Park to View Ride Queue & Info", bg=fav_colour if fav_colour else None, font=("Helvetica", 14)).pack(pady=10)
 
         def show_ride_details(park):
-            ride_detail_window = tk.Toplevel(ride_window)
+            ride_detail_window = tk.Toplevel(ride_window, bg=fav_colour if fav_colour else None)
             # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
             ride_detail_window.title(f"{park.park_name} Rides") # Double Overlapping Window Name
             ride_detail_window.geometry("600x450") # Double Overlapping Window Size
@@ -869,9 +1072,9 @@ def guest_interface(guest):
                 # Rephrase: This button is packed on the screen. When clicked, it packs a label!
                 
             # Labels BELOW Buttons    
-            ride_info_label = tk.Label(ride_detail_window, text="", justify="left", font=("Helvetica", 10))
+            ride_info_label = tk.Label(ride_detail_window, text="", bg=fav_colour if fav_colour else None, justify="left", font=("Helvetica", 10))
             ride_info_label.pack(pady=10)
-            ride_queue_label = tk.Label(ride_detail_window, text="", justify="left", font=("Helvetica", 10))
+            ride_queue_label = tk.Label(ride_detail_window, text="", bg=fav_colour if fav_colour else None, justify="left", font=("Helvetica", 10))
             ride_queue_label.pack(pady=10)
             
             # Function to Rewrite Label (Depending on Selected Ride)
@@ -885,16 +1088,16 @@ def guest_interface(guest):
             tk.Button(ride_window, text=park.park_name, command=lambda p=park: show_ride_details(p)).pack(pady=5)
         
     def restaurants():
-        restaurant_window = tk.Toplevel(guest_root)
+        restaurant_window = tk.Toplevel(guest_root, bg=fav_colour if fav_colour else None)
         # Again, Toplevel will open an overlapping window!
         restaurant_window.title("Restaurant Management") # Overlapping Window Name
         restaurant_window.geometry("800x600") # Overlapping Window Size
 
         load_logo_image(restaurant_window, "logo.png") # Add logo image
-        tk.Label(restaurant_window, text="Select a Park to View Restaurants", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(restaurant_window, text="Select a Park to View Restaurants", bg=fav_colour if fav_colour else None, font=("Helvetica", 14)).pack(pady=10)
 
         def show_restaurant_details(park):
-            rest_detail_window = tk.Toplevel(restaurant_window)
+            rest_detail_window = tk.Toplevel(restaurant_window, bg=fav_colour if fav_colour else None)
             # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
             rest_detail_window.title(f"{park.park_name} Restaurants") # Double Overlapping Window Name
             rest_detail_window.geometry("800x600") # Double Overlapping Window Size
@@ -905,12 +1108,12 @@ def guest_interface(guest):
             for restaurant in park.restaurants:
 
                 def show_restaurant_info(restaurant=restaurant):
-                    info_window = tk.Toplevel(rest_detail_window) # Overlapping Window
+                    info_window = tk.Toplevel(rest_detail_window, bg=fav_colour if fav_colour else None) # Overlapping Window
                     info_window.title(f"{restaurant.name} Info") # Overlapping Window Name
                     info_window.geometry("800x600") # Overlapping Window Size
                     
                     load_logo_image(info_window, "logo.png") # Add logo image
-                    tk.Label(info_window, text=restaurant.get_restaurant_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
+                    tk.Label(info_window, text=restaurant.get_restaurant_info(), bg=fav_colour if fav_colour else None, justify="center", font=("Helvetica", 12)).pack(pady=10)
 
                 tk.Button(rest_detail_window, text=restaurant.name, command=lambda r=restaurant:show_restaurant_info(r)).pack(pady=5)
 
@@ -920,16 +1123,16 @@ def guest_interface(guest):
             tk.Button(restaurant_window, text=park.park_name, command=lambda p=park: show_restaurant_details(p)).pack(pady=10)      
         
     def shops():
-        shop_window = tk.Toplevel(guest_root)
+        shop_window = tk.Toplevel(guest_root, bg=fav_colour if fav_colour else None)
         # Again, Toplevel will open an overlapping window!
         shop_window.title("Shop Management") # Overlapping Window Name
         shop_window.geometry("800x600") # Overlapping Window Size
 
         load_logo_image(shop_window, "logo.png") # Add logo image
-        tk.Label(shop_window, text="Select a Park to View Shops", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(shop_window, text="Select a Park to View Shops", bg=fav_colour if fav_colour else None, font=("Helvetica", 14)).pack(pady=10)
 
         def show_shop_details(park):
-            shop_detail_window = tk.Toplevel(shop_window)
+            shop_detail_window = tk.Toplevel(shop_window, bg=fav_colour if fav_colour else None)
             # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
             shop_detail_window.title(f"{park.park_name} Shops") # Double Overlapping Window Name
             shop_detail_window.geometry("800x600") # Double Overlapping Window Size
@@ -939,12 +1142,12 @@ def guest_interface(guest):
             for shop in park.shops:
 
                 def show_shop_info(shop=shop):
-                    info_window = tk.Toplevel(shop_detail_window) # Overlapping Window
+                    info_window = tk.Toplevel(shop_detail_window, bg=fav_colour if fav_colour else None) # Overlapping Window
                     info_window.title(f"{shop.name} Info") # Overlapping Window Name
                     info_window.geometry("800x600") # Overlapping Window Size
                     
                     load_logo_image(info_window, "logo.png") # Add logo image
-                    tk.Label(info_window, text=shop.get_shop_info(), justify="center", font=("Helvetica", 12)).pack(pady=10)
+                    tk.Label(info_window, text=shop.get_shop_info(), bg=fav_colour if fav_colour else None, justify="center", font=("Helvetica", 12)).pack(pady=10)
 
                 tk.Button(shop_detail_window, text=shop.name, command=lambda s=shop: show_shop_info(s)).pack(pady=5)
 
@@ -954,16 +1157,16 @@ def guest_interface(guest):
             tk.Button(shop_window, text=park.park_name, command=lambda p=park: show_shop_details(p)).pack(pady=10)        
         
     def elements():
-        element_window = tk.Toplevel(guest_root)
+        element_window = tk.Toplevel(guest_root, bg=fav_colour if fav_colour else None)
         # Again, Toplevel will open an overlapping window!
         element_window.title("Park Elements") # Overlapping Window Name
         element_window.geometry("800x600") # Overlapping Window Size
 
         load_logo_image(element_window, "logo.png") # Add logo image
-        tk.Label(element_window, text="Select a Park to View Elements", font=("Helvetica", 14)).pack(pady=10)
+        tk.Label(element_window, text="Select a Park to View Elements", bg=fav_colour if fav_colour else None, font=("Helvetica", 14)).pack(pady=10)
 
         def show_element_details(park):
-            element_detail_window = tk.Toplevel(element_window)
+            element_detail_window = tk.Toplevel(element_window, bg=fav_colour if fav_colour else None)
             # Again, Toplevel will open an overlapping window, but again, on an overlapping window!
             element_detail_window.title(f"{park.park_name} Elements") # Double Overlapping Window Name
             element_detail_window.geometry("800x600") # Double Overlapping Window Size
@@ -975,16 +1178,26 @@ def guest_interface(guest):
             details = "\n\n\n\n".join([elem.name for elem in park.elements])
             
             # Display Details in a Single Label
-            tk.Label(element_detail_window, text=details, justify="center", font=("Helvetica", 12)).pack(pady=20)
+            tk.Label(element_detail_window, text=details, bg=fav_colour if fav_colour else None, justify="center", font=("Helvetica", 12)).pack(pady=20)
 
         # Create a simple for loop for each park instead of making each button individually
         for park in disney_parks:
             tk.Button(element_window, text=park.park_name, command=lambda p=park: show_element_details(p)).pack(pady=10)   
-        
-    load_logo_image(guest_root, "characters.png") # Add characters image
+    
+    if guest.name[0].lower() in "abcdef":
+        load_logo_image(guest_root, "mickey.png") # Add characters image
+    elif guest.name[0].lower() in "ghijk":
+        load_logo_image(guest_root, "goofy.png") # Add characters image
+    elif guest.name[0].lower() in "lmnop":
+        load_logo_image(guest_root, "genie.png") # Add characters image
+    elif guest.name[0].lower() in "qrstu":
+        load_logo_image(guest_root, "stitch.png") # Add characters image
+    else: # If name starts with VWXYZ
+        load_logo_image(guest_root, "simba.png") # Add characters image
+    tk.Label(guest_root, text=f"Welcome, {guest.name}!", font=("Helvetica", 11), bg=fav_colour if fav_colour else None).pack()
+    
     load_logo_image(guest_root, "logo.png") # Add logo image
-    tk.Label(guest_root, text="Disney Guest Interface", font=("Helvetica", 18)).pack(pady=5)
-    tk.Label(guest_root, text=f"Welcome, {guest.name}!", font=("Helvetica", 10)).pack()
+    tk.Label(guest_root, text="Disney Guest Interface", font=("Helvetica", 18), bg=fav_colour if fav_colour else None).pack()
     tk.Button(guest_root, text="Park Overview", command=lambda: show_park_overview(), width=20, height=2).pack(pady=10)
     tk.Button(guest_root, text="Rides: Queue & Info", command=lambda: rides(), width=20, height=2).pack(pady=10)
     tk.Button(guest_root, text="Restaurant Info", command=lambda: restaurants(), width=20, height=2).pack(pady=10)

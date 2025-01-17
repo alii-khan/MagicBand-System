@@ -1,3 +1,8 @@
+# EDITED BY ALI KHAN > class MagicBand:
+#   USEAGE HISTORY APPENDING --> Cleaner
+#   "Park" parameter --> "park"
+#   PRICE PARAMETER from :float --> any IN RESTAURANT ADD DISH
+
 from park_features import *
 
 class Transaction:
@@ -116,30 +121,30 @@ class MagicBand():
        
         self.light_up = False
 
-    def use_band_for_park_entry(self, Park: object):
-        if Park.park_name in self.linked_tickets:
-            print(f"Welcome to {Park.park_name}")
+    def use_band_for_park_entry(self, park: object):
+        if park.park_name in self.linked_tickets:
+            print(f"Welcome to {park.park_name}")
             self.light_up = True
             print(f"Your band has lit up a bright {self.current_color}")
-            self.linked_tickets.remove(Park.park_name)
-            self.current_location = Park.park_name
+            self.linked_tickets.remove(park.park_name)
+            self.current_location = park.park_name
         else:
             return "You do not have a ticket for this park"
 
     def use_band_for_ride(self, ride: object):
-        self.useage_history.append("Ride : "+ ride.ride_name)
+        self.useage_history.append(f"Ride: {ride.ride_name}\n")
         self.current_color = ride.ride_name
         ride.add_to_queue(self)
 
     def use_band_in_restaurant(self, restaurant:Restaurant, price_of_dish: float, name_of_dish:str):
         self.most_recent_order = Transaction(price_of_dish, name_of_dish, restaurant.name, True, False)
-        self.useage_history.append("Food order:" + restaurant.name + "> "+ name_of_dish)
+        self.useage_history.append(f"Food order: {restaurant.name} > {name_of_dish}\n")
         self.current_location = restaurant.name
         self.bought_item += 1
 
     def use_band_in_shop(self, shop: Shop, price_of_item:float, name_of_item:str):
         self.most_recent_item = Transaction(price_of_item, name_of_item, shop.name, False, True)
-        self.useage_history.append("Bought item:" + shop.name + ">" + name_of_item)
+        self.useage_history.append(f"Bought item: {shop.name}  >  {name_of_item}\n")
         self.current_location = shop.name
         self.bought_item += 1
 
@@ -148,14 +153,14 @@ class MagicBand():
         self.current_color = color
     
     def use_band_in_element(self, element:object):
-        self.useage_history.append("Interact with element : "+ element.name)
+        self.useage_history.append(f"Interact with element: {element.name}\n")
         self.current_location = element.name
         element.interact(self)
 
-    def purchase_park_ticket(self, Park: object):
-        self.useage_history.append("Purchase Park Ticket : " + Park.park_name)
+    def purchase_park_ticket(self, park: object):
+        self.useage_history.append(f"Purchase Park Ticket: {park.park_name}\n")
         self.current_location = "Ticket Store"
-        self.linked_tickets.append(Park.park_name)
+        self.linked_tickets.append(park.park_name)
 
     def __str__(self):
         return f"{self.band_id}: Band_id for magic band class"
