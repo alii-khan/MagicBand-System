@@ -1,5 +1,5 @@
 # EDITED BY ALI KHAN > class MagicBand:
-#   USEAGE HISTORY APPENDING --> Cleaner
+#   USEAGE HISTORY APPENDING --> Cleaner and Past Tense Vocabulary
 #   "Park" parameter --> "park"
 #   PRICE PARAMETER from :float --> any IN RESTAURANT ADD DISH
 
@@ -132,7 +132,7 @@ class MagicBand():
             return "You do not have a ticket for this park"
 
     def use_band_for_ride(self, ride: object):
-        self.useage_history.append(f"Ride: {ride.ride_name}\n")
+        self.useage_history.append(f"Rode: {ride.ride_name}\n")
         self.current_color = ride.ride_name
         ride.add_to_queue(self)
 
@@ -153,12 +153,12 @@ class MagicBand():
         self.current_color = color
     
     def use_band_in_element(self, element:object):
-        self.useage_history.append(f"Interact with element: {element.name}\n")
+        self.useage_history.append(f"Interacted with element: {element.name}\n")
         self.current_location = element.name
         element.interact(self)
 
     def purchase_park_ticket(self, park: object):
-        self.useage_history.append(f"Purchase Park Ticket: {park.park_name}\n")
+        self.useage_history.append(f"Purchased Park Ticket: {park.park_name}\n")
         self.current_location = "Ticket Store"
         self.linked_tickets.append(park.park_name)
 
